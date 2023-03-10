@@ -1,0 +1,133 @@
+package com.example.unicode
+
+import android.content.Intent
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.unicode.databinding.ActivityAllProductsBinding
+import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+class AllProducts : AppCompatActivity() {
+
+//    attribute
+    private lateinit var binding: ActivityAllProductsBinding
+    var productsList = arrayListOf<ProductClass>()
+    lateinit var session: SessionManager
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        binding = ActivityAllProductsBinding.inflate(layoutInflater)
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+
+        session = SessionManager(applicationContext)
+
+//        val username: String? = session.pref.getString(SessionManager.KEY_NAME, null)
+//        val id: String? = session.pref.getString(SessionManager.KEY_ID, null)
+
+        var userData = intent.getStringArrayListExtra("userData")
+        println(userData)
+
+        binding.rcv.layoutManager = GridLayoutManager(this,1)
+        binding.rcv.addItemDecoration(DividerItemDecoration(
+            binding.rcv.getContext(),DividerItemDecoration.VERTICAL)
+        )
+
+
+        binding.bottomNavigation.setOnItemSelectedListener {
+
+            when (it.itemId){
+                R.id.category -> Toast.makeText(applicationContext, "Category", Toast.LENGTH_LONG).show()
+                R.id.home ->{
+                    ""
+                }
+                R.id.account -> {
+                    intent = Intent(applicationContext,AccountPage::class.java)
+                    intent.putStringArrayListExtra("userData",userData)
+                    startActivity(intent)
+                }
+            }
+            true
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        productLast()
+        callProductsData()
+    }
+
+    //    create menu
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.my_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.fav -> {
+                var intent = Intent(applicationContext, FavoritePage::class.java)
+                startActivity(intent)
+            }
+            R.id.basket -> Toast.makeText(applicationContext, "Basket", Toast.LENGTH_LONG).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+//    method
+    fun callProductsData(){
+        productsList.clear()
+        val productClient = ProductAPI.create()
+        productClient.productAll()
+            .enqueue(object : Callback<List<ProductClass>> {
+                override fun onResponse(call: Call<List<ProductClass>>, response:
+
+                Response<List<ProductClass>>) {
+
+                    response.body()?.forEach {
+    //                        @SerializedName("id") val id: Int,
+    //                        @SerializedName("product_name") val product_name: String,
+    //                        @SerializedName("price") val price: Int,
+    //                        @SerializedName("detail") val detail: String,
+    //                        @SerializedName("photo") val photo: String,
+    //                        @SerializedName("amount") val amount: Int,
+    //                        @SerializedName("subtype_id") val subtype_id: Int,
+                        productsList.add(ProductClass(
+                            it.id, it.product_name,it.price,it.detail,it.photo,it.amount,it.subtype_id)) }
+                    binding.rcv.adapter = ProductsAdapter(productsList, applicationContext)
+                }
+                override fun onFailure(call: Call<List<ProductClass>>, t: Throwable) {
+                    Toast.makeText(applicationContext,"Error onFailure " + t.message, Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
+    fun productLast(){
+        val serv : ProductAPI = Retrofit.Builder() // Create Client
+            .baseUrl("http://10.0.2.2:3000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ProductAPI ::class.java)
+        serv.productLast()
+            .enqueue(object : Callback<List<ProductClass>> {
+                override fun onResponse(call: Call<List<ProductClass>>, response:
+                Response<List<ProductClass>>) {
+                    response.body()?.forEach {
+                        val uri = it.photo
+                        Picasso.get().load(uri).into(binding.lastProduct)
+                    }
+                }
+                override fun onFailure(call: Call<List<ProductClass>>, t: Throwable) {
+                    Toast.makeText(applicationContext,"Error onFailure " + t.message, Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
+}
