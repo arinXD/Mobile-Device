@@ -45,17 +45,7 @@ class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
         tv!!.text = "${year}-${month}-${day}"
 
     }
-    fun onDateSetCredit(view: DatePicker, year: Int, month: Int, day: Int) {
-        var tv1 : TextView? = activity?.findViewById(R.id.editexpiredate)
-<<<<<<< Updated upstream
-        val month = month + 1
-        tv1!!.text = "${year}-${month}-${day}"
-=======
-        val month1 = month + 1
-        tv1!!.text = "${year}-${month1}-${day}"
 
->>>>>>> Stashed changes
-    }
 
     override fun onCancel(dialog: DialogInterface) {
         Toast.makeText(activity, "Please select a date.", Toast.LENGTH_SHORT).show()
