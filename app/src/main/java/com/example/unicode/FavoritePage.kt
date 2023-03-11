@@ -41,7 +41,6 @@ class FavoritePage : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.account -> {
-//                    intent.putStringArrayListExtra("userData",userData)
                     intent = Intent(applicationContext, AccountPage::class.java)
                     startActivity(intent)
                 }
@@ -59,9 +58,7 @@ class FavoritePage : AppCompatActivity() {
     fun allFavorite(id: Int) {
         productsList.clear()
         val favClient = FavAPI.create()
-//        val favClient = ProductAPI.create()
         favClient.favProduct(id)
-//        favClient.productAll()
             .enqueue(object : Callback<List<FavProduct>> {
                 override fun onResponse(
                     call: Call<List<FavProduct>>, response:
@@ -69,10 +66,8 @@ class FavoritePage : AppCompatActivity() {
                 ) {
                     println(response.body())
                     response.body()?.forEach {
-                        productsList.add(FavProduct(it.id,it.product_name,it.price,it.photo,))
-//                        productsList.add(ProductClass(it.id, it.product_name,it.price,it.detail,it.photo,it.amount,it.subtype_id))
+                        productsList.add(FavProduct(it.pv_id,it.id,it.product_name,it.price,it.photo,))
                     }
-//                    binding.rcv.adapter = ProductsAdapter(productsList, applicationContext)
                     binding.rcv.adapter = FavoriteAdapter(productsList, applicationContext)
                 }
 

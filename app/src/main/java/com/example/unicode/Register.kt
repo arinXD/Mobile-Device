@@ -95,8 +95,7 @@ class Register : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<AddUser>, t: Throwable) {
-                Toast.makeText(applicationContext,"Error onFailure "+
-                        t.message,Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext,"Duplicate email",Toast.LENGTH_LONG).show()
             }
 
         })

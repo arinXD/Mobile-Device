@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class FavProduct(
     @Expose
+    @SerializedName("pv_id") val pv_id: Int,
+
+    @Expose
     @SerializedName("id") val id: Int,
 
     @Expose

@@ -19,7 +19,7 @@ interface AdminProductAPI {
         @Field("detail")detail: String,
         @Field("photo")photo: String,
         @Field("amount")amount: Int,
-        @Field("subtype_id")subtype_id: Int):Call<AdminProduct>
+        @Field("subtype_id")subtype_id: Int): Call<AdminProduct>
 
 
     @FormUrlEncoded

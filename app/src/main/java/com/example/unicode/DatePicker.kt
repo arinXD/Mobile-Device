@@ -44,6 +44,10 @@ class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
         val month = month + 1
         tv!!.text = "${year}-${month}-${day}"
 
+        var tv1 : TextView? = activity?.findViewById(R.id.editexpiredate)
+        val month1 = month + 1
+        tv1!!.text = "${year}-${month}-${day}"
+
     }
 
     override fun onCancel(dialog: DialogInterface) {

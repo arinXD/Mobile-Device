@@ -36,7 +36,7 @@ class AllProducts : AppCompatActivity() {
         var userData = intent.getStringArrayListExtra("userData")
         println(userData)
 
-        binding.rcv.layoutManager = GridLayoutManager(this,1)
+        binding.rcv.layoutManager = GridLayoutManager(this,2)
         binding.rcv.addItemDecoration(DividerItemDecoration(
             binding.rcv.getContext(),DividerItemDecoration.VERTICAL)
         )
@@ -85,20 +85,12 @@ class AllProducts : AppCompatActivity() {
     fun callProductsData(){
         productsList.clear()
         val productClient = ProductAPI.create()
-        productClient.productAll()
-            .enqueue(object : Callback<List<ProductClass>> {
+        productClient.productAll().enqueue(object : Callback<List<ProductClass>> {
                 override fun onResponse(call: Call<List<ProductClass>>, response:
 
                 Response<List<ProductClass>>) {
 
                     response.body()?.forEach {
-    //                        @SerializedName("id") val id: Int,
-    //                        @SerializedName("product_name") val product_name: String,
-    //                        @SerializedName("price") val price: Int,
-    //                        @SerializedName("detail") val detail: String,
-    //                        @SerializedName("photo") val photo: String,
-    //                        @SerializedName("amount") val amount: Int,
-    //                        @SerializedName("subtype_id") val subtype_id: Int,
                         productsList.add(ProductClass(
                             it.id, it.product_name,it.price,it.detail,it.photo,it.amount,it.subtype_id)) }
                     binding.rcv.adapter = ProductsAdapter(productsList, applicationContext)
