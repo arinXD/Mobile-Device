@@ -35,7 +35,7 @@ class InsertCradit : AppCompatActivity() {
     }
 
     fun showDatePickerDialog(v: View) {
-        val newDateFragment = DatePicker()
+        val newDateFragment = DatePickerCredit()
         newDateFragment.show(supportFragmentManager, "Date Picker")
     }
     private fun addCradit(){

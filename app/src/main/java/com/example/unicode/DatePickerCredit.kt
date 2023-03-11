@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import java.text.DateFormat
 import java.util.*
 
-class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
+class DatePickerCredit : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     private lateinit var calendar: Calendar
 
@@ -39,16 +39,10 @@ class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     // When date set and press ok button in date picker dialog
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
-        // Display the selected date in text view
-        var tv: TextView? = activity?.findViewById(R.id.birthdayTxtDatePicker)
-        val month = month + 1
-        tv!!.text = "${year}-${month}-${day}"
-
-    }
-    fun onDateSetCredit(view: DatePicker, year: Int, month: Int, day: Int) {
         var tv1 : TextView? = activity?.findViewById(R.id.editexpiredate)
         val month = month + 1
         tv1!!.text = "${year}-${month}-${day}"
+
     }
 
     override fun onCancel(dialog: DialogInterface) {
