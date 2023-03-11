@@ -7,15 +7,15 @@
     android:orientation="vertical"
     android:padding="15dp"
     tools:context=".ShowEditActivity">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="แก้ไขที่อยู่จัดส่ง"
-        android:textSize="23sp"
-        android:textColor="@color/black"
-        android:gravity="center"
         android:layout_marginBottom="10sp"
-        />
+        android:gravity="center"
+        android:text="แก้ไขที่อยู่จัดส่ง"
+        android:textColor="@color/black"
+        android:textSize="23sp" />
 
     <EditText
         android:id="@+id/editaddress"

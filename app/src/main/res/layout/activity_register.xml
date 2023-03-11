@@ -4,129 +4,133 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="@drawable/nurseque"
     android:orientation="vertical"
     tools:context=".Login">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Register"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp">
+        android:layout_height="match_parent"
+        android:background="#EB282828"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="ลงทะเบียน"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <EditText
             android:id="@+id/edtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"></com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="17sp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="ชื่อผู้ใช้"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"></com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
-    <!--    <com.google.android.material.textfield.TextInputLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="20sp"-->
-    <!--        android:layout_marginEnd="20dp"-->
-    <!--        android:layout_marginBottom="15dp">-->
-    <!--        <com.google.android.material.textfield.TextInputEditText-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:id="@+id/edtLastname"-->
-    <!--            android:hint="LastName">-->
-    <!--        </com.google.android.material.textfield.TextInputEditText>-->
-    <!--    </com.google.android.material.textfield.TextInputLayout>-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp">
+            android:layout_marginStart="17sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="17dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="อีเมล"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"></com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="17sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="17dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="พาสเวิร์ด"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="25dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/confirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirm password"
-            android:inputType="textPassword">
+            android:layout_marginStart="17sp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="17dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="ยินยันพาสเวิร์ด"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/birthdayTxtDatePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="25dp"
-        android:textSize="18dp"
-        android:text="Select  birthday"/>
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/male"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/birthdayTxtDatePicker"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:text="Male"
-            android:textSize="18sp" />
+            android:layout_marginStart="20sp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:hint="Select birthday"
+            android:backgroundTint="@android:color/white"
+            android:textSize="18sp"
+            android:background="@drawable/border" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/female"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:text="Female"
-            android:textSize="18sp" />
-    </RadioGroup>
+            android:layout_marginStart="20sp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CREATE ACCOUNT" />
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:buttonTint="@color/white"
+                android:textColor="@color/white"
+                android:text="Male"
+                android:textSize="18sp" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_marginRight="20dp"
+                android:buttonTint="@color/white"
+                android:text="Female"
+                android:textSize="18sp" />
+        </RadioGroup>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22sp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_black"
+            android:fontFamily="@font/kanitlight"
+            android:text="ลงทะเบียน"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
 </LinearLayout>

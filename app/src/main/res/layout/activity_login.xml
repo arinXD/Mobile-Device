@@ -30,10 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20sp"
-            android:textColor="@android:color/white"
             android:layout_marginEnd="20dp"
-            android:backgroundTint="@android:color/white"
             android:hint="อีเมล"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@android:color/white"
             android:textColorHint="@android:color/white"
             android:inputType="text"/>
         <EditText
@@ -47,7 +47,7 @@
             android:backgroundTint="@android:color/white"
             android:hint="พาสเวิร์ด"
             android:textColor="@android:color/white"
-            android:inputType="text"/>
+            android:inputType="textPassword"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login"
