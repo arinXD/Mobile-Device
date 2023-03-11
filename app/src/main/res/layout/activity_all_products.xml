@@ -19,6 +19,7 @@
                 android:layout_height="wrap_content"
                 android:text="Find your style"
                 android:textColor="#000000"
+                android:fontFamily="@font/kanitlight"
                 android:textSize="30sp"
                 android:gravity="center" />
             <androidx.appcompat.widget.AppCompatImageView

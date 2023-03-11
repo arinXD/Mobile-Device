@@ -28,7 +28,7 @@ class AdminShowEditDelete : AppCompatActivity() {
         val mDetail = intent.getStringExtra("detail")
         val mPhoto = intent.getStringExtra("photo")
         val mAmount = intent.getIntExtra("amount",0)
-        val mSubtype_id = intent.getIntExtra("subtype_id",0)
+        val mSubtype_id = intent.getIntExtra("product_type",0)
 
         bindingShow.txtid.setText(mId.toString())
         bindingShow.txttitle.setText(mName.toString())
@@ -45,7 +45,7 @@ class AdminShowEditDelete : AppCompatActivity() {
             intent.putExtra("detail",mDetail)
             intent.putExtra("photo",mPhoto)
             intent.putExtra("amount",mAmount)
-            intent.putExtra("subtype_id",mSubtype_id.toString())
+            intent.putExtra("product_type",mSubtype_id.toString())
             startActivity(intent)
         }
         bindingShow.btnDelete.setOnClickListener {
@@ -75,7 +75,7 @@ class AdminShowEditDelete : AppCompatActivity() {
                     response: Response<List<AdminProduct>>
                 ) {
                     response.body()?.forEach {
-                        productList.add(AdminProduct(it.id,it.product_name,it.price,it.detail,it.photo,it.amount,it.subtype_id))
+                        productList.add(AdminProduct(it.id,it.product_name,it.price,it.detail,it.photo,it.amount,it.product_type))
                     }
 //                    bindingShow.recyclerViewInterface.id = EditProductsAdapter(productList, applicationContext)
 

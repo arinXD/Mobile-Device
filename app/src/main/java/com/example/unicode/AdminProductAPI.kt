@@ -19,7 +19,7 @@ interface AdminProductAPI {
         @Field("detail")detail: String,
         @Field("photo")photo: String,
         @Field("amount")amount: Int,
-        @Field("subtype_id")subtype_id: Int): Call<AdminProduct>
+        @Field("product_type")product_type: Int): Call<AdminProduct>
 
 
     @FormUrlEncoded
@@ -31,7 +31,7 @@ interface AdminProductAPI {
         @Field("detail")detail: String,
         @Field("photo")photo: String,
         @Field("amount")amount: Int,
-        @Field("subtype_id")subtype_id: Int): Call<AdminProduct>
+        @Field("product_type")product_type: Int): Call<AdminProduct>
 
 
     @DELETE("product/{id}")
@@ -49,5 +49,7 @@ interface AdminProductAPI {
             return  adminProductClient
         }
     }
+    @GET("allproduct_type")
+    fun retrieveProductType(): Call<List<producttypeClass>>
 
 }

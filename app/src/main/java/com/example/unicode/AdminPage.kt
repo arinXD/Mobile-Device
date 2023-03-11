@@ -69,7 +69,7 @@ class AdminPage : AppCompatActivity(), AdminProductsAdapter.MyClickListener{
                     response: Response<List<AdminProduct>>
                 ) {
                     response.body()?.forEach {
-                        productList.add(AdminProduct(it.id,it.product_name,it.price,it.detail,it.photo,it.amount,it.subtype_id))
+                        productList.add(AdminProduct(it.id,it.product_name,it.price,it.detail,it.photo,it.amount,it.product_type))
                     }
                     binding.recyclerView.adapter = AdminProductsAdapter(productList, applicationContext,this@AdminPage)
 
@@ -90,7 +90,7 @@ class AdminPage : AppCompatActivity(), AdminProductsAdapter.MyClickListener{
         intent.putExtra("price", product.price.toString().toInt())
         intent.putExtra("amount", product.amount.toString().toInt())
         intent.putExtra("detail", product.detail)
-        intent.putExtra("subtype_id", product.subtype_id.toString().toInt())
+        intent.putExtra("product_type", product.product_type.toString().toInt())
         intent.putExtra("photo", product.photo)
         startActivity(intent)
 //        startActivity(Intent(this,ShowEditDeleteActivity::class.java))
