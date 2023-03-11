@@ -4,21 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    android:background="@drawable/nurseque"
     tools:context=".Login">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4D000000"
+        android:orientation="vertical">
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Login"
-        android:textSize="30sp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:text="Unicode."
+        android:layout_marginTop="90dp"
+        android:fontFamily="@font/nanumgothicregular"
+        android:textSize="60sp"
+        android:textColor="@color/black"
         android:textStyle="bold"/>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20sp"
+        android:fontFamily="@font/kanitlight"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="15dp">
         <com.google.android.material.textfield.TextInputEditText
@@ -26,35 +35,47 @@
             android:layout_height="wrap_content"
             android:id="@+id/user_email"
             android:inputType="text"
-            android:hint="Email">
+            android:textColor="@color/white"
+            android:hint="อีเมล">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/kanitlight"
         android:layout_marginStart="20sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp">
+        android:layout_marginEnd="20dp">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/user_password"
             android:inputType="textPassword"
-            android:hint="Password">
+            android:hint="พาสเวิร์ด">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/login"
-        android:text="Login"/>
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/kanitlight"
         android:layout_marginTop="20dp"
-        android:padding="20dp"
-        android:textSize="20dp"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:text="เข้าสู่ระบบ"
+        android:textSize="20sp"/>
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/register"
-        android:layout_marginBottom="20dp"
-        android:text="Register"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:fontFamily="@font/kanitlight"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="#E5C3FF"
+        android:textColor="@color/black"
+        android:text="ลงทะเบียน"
+        android:textSize="20sp"/>
+    </LinearLayout>
 </LinearLayout>
