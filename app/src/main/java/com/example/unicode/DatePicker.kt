@@ -24,7 +24,7 @@ class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
         // Get the system current date
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val day  = calendar.get(Calendar.DAY_OF_MONTH)
         // Initialize a new date picker dialog and return it
         return DatePickerDialog(
             requireContext(), // Context
