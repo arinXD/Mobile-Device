@@ -41,14 +41,14 @@ class FavoriteAdapter (val items : ArrayList<FavProduct>, val context: Context) 
             }
             binding.btnAddtoCart.setOnClickListener {
                 val item = items[adapterPosition]
-//                val contextView : Context = view.context
-//                val intent = Intent(context, ProductPage::class.java)
-//                intent.putExtra("product_id",item.id.toString())
+                val contextView : Context = view.context
+                val intent = Intent(context, ProductPage::class.java)
+                intent.putExtra("product_id",item.id.toString())
 //                intent.putExtra("product_detail",item.detail)
-//                intent.putExtra("product_name",item.product_name)
-//                intent.putExtra("product_price",item.price.toString())
-//                intent.putExtra("product_photo",item.photo)
-//                contextView.startActivity(intent)
+                intent.putExtra("product_name",item.product_name)
+                intent.putExtra("product_price",item.price.toString())
+                intent.putExtra("product_photo",item.photo)
+                contextView.startActivity(intent)
             }
         }
     }
