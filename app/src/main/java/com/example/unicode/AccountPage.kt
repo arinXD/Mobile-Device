@@ -15,19 +15,36 @@ class AccountPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAccountPageBinding.inflate(layoutInflater)
+        session = SessionManager(applicationContext)
         setContentView(binding.root)
 
-        session = SessionManager(applicationContext)
 
-//        var userData = intent.getStringArrayListExtra("userData")
         val email: String? = session.pref.getString(SessionManager.KEY_EMAIL, null)
         val userName: String? = session.pref.getString(SessionManager.KEY_NAME, null)
 
-//        binding.userName.text = userData?.get(2)
         binding.userName.text = userName
         binding.email.text = email
 
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.myOrder.setOnClickListener {
+//            var intent = Intent(applicationContext, ::class.java)
+//            startActivity(intent)
+        }
+        binding.myCredit.setOnClickListener {
+            var intent = Intent(applicationContext, craditcardPage::class.java)
+            startActivity(intent)
+        }
+        binding.myFavorite.setOnClickListener {
+            var intent = Intent(applicationContext, FavoritePage::class.java)
+            startActivity(intent)
+        }
+        binding.myAddress.setOnClickListener {
+            var intent = Intent(applicationContext, addressPage::class.java)
+            startActivity(intent)
+        }
+        binding.myTransport.setOnClickListener {
+//            var intent = Intent(applicationContext, ::class.java)
+//            startActivity(intent)
+        }
 
         binding.logout.setOnClickListener {
             val edit = session.edior
@@ -71,6 +88,9 @@ class AccountPage : AppCompatActivity() {
             finish()
         }
         when (item.itemId) {
+            R.id.fav -> {
+                startActivity(Intent(applicationContext, FavoritePage::class.java))
+            }
             R.id.basket -> Toast.makeText(applicationContext, "Basket", Toast.LENGTH_LONG).show()
         }
         return super.onOptionsItemSelected(item)

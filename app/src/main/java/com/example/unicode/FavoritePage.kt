@@ -3,6 +3,7 @@ package com.example.unicode
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,6 +25,9 @@ class FavoritePage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         session = SessionManager(applicationContext)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDispla
 
         binding.rcv.adapter = FavoriteAdapter(productsList,applicationContext)
         binding.rcv.layoutManager = LinearLayoutManager(applicationContext)
@@ -53,6 +57,13 @@ class FavoritePage : AppCompatActivity() {
         super.onResume()
         val uId: String? = session.pref.getString(SessionManager.KEY_ID, null)
         allFavorite(uId.toString().toInt())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun allFavorite(id: Int) {
