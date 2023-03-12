@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.bumptech.glide.Glide
 import com.example.unicode.databinding.ActivityAdminShowEditDeleteBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +36,7 @@ class AdminShowEditDelete : AppCompatActivity() {
         bindingShow.txtprice.setText("฿" + mPrice.toString())
 //        bindingShow.txtamout.setText("Amount: " + mAmount.toString())
 //        bindingShow.txtimageProduct.setImageResource(mPhoto.toString().toInt())
+        Glide.with(applicationContext).load(mPhoto.toString()).into(bindingShow.txtimageProduct)
 
 
         bindingShow.btnEdit.setOnClickListener {
