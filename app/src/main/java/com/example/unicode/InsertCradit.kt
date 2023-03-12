@@ -15,15 +15,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 class InsertCradit : AppCompatActivity() {
     private lateinit var bindingInsert: ActivityInsertCraditBinding
     var craditlist = arrayListOf<cradit>()
+    lateinit var session: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        session = SessionManager(applicationContext)
         bindingInsert = ActivityInsertCraditBinding.inflate(layoutInflater)
         setContentView(bindingInsert.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         bindingInsert.btnAddCradit.setOnClickListener{
-            addCradit()
+            val id: String? = session.pref.getString(SessionManager.KEY_ID, null)
+            addCradit(id.toString())
         }
     }
 
@@ -38,7 +41,7 @@ class InsertCradit : AppCompatActivity() {
         val newDateFragment = DatePickerCredit()
         newDateFragment.show(supportFragmentManager, "Date Picker")
     }
-    private fun addCradit(){
+    private fun addCradit(id:String){
         val api: CraditAPI = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:3000/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -48,7 +51,7 @@ class InsertCradit : AppCompatActivity() {
             bindingInsert.editName.text.toString(),
             bindingInsert.editCardID.text.toString(),
             bindingInsert.editexpiredate.text.toString(),
-            bindingInsert.editcvv.text.toString().toInt(),1
+            bindingInsert.editcvv.text.toString().toInt(),id.toString().toInt()
         ).enqueue(object : Callback<cradit> {
             override fun onResponse(
                 call: Call<cradit>,
