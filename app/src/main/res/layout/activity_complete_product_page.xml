@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".CompleteProductPage">
 
     <TextView
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:background="@color/white"
         android:gravity="center"
         android:padding="10dp"
@@ -21,15 +21,45 @@
 
     <RelativeLayout
         android:id="@+id/box"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:background="@color/white"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true"
+            android:id="@+id/boxImg"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="40dp"
             android:background="@drawable/boxpng" />
+
+        <TextView
+            android:id="@+id/orderTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/boxImg"
+            android:text="Order: " />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/created_at"
+            android:layout_below="@id/orderTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/boxImg"
+            android:text="00/00/00" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/priceAll"
+            android:layout_below="@id/created_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/boxImg"
+            android:text="ยอดรวม 100 บาท" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -38,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/box"
         android:layout_centerHorizontal="true"
+        android:background="@color/white"
         android:padding="10dp" />
 
     <TextView
@@ -74,7 +105,8 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:background="@color/white">
 
         <View
             android:layout_width="wrap_content"

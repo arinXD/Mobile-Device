@@ -186,16 +186,17 @@
                             android:textSize="15sp" />
                     </RadioGroup>
                 </RelativeLayout>
-                <EditText
-                    android:id="@+id/sizeOrder"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:hint="ไซส์"
-                    android:layout_centerInParent="true"
-                    android:layout_toRightOf="@id/detail"
-                    android:inputType="text"
-                    android:textSize="15sp" />
+
+<!--                <EditText-->
+<!--                    android:id="@+id/sizeOrder"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:layout_marginLeft="0dp"-->
+<!--                    android:layout_toRightOf="@id/detail"-->
+<!--                    android:hint="ไซส์"-->
+<!--                    android:inputType="text"-->
+<!--                    android:textSize="15sp" />-->
 
 
                 <androidx.appcompat.widget.AppCompatButton

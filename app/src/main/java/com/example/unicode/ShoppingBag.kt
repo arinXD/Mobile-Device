@@ -1,5 +1,6 @@
 package com.example.unicode
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -37,6 +38,12 @@ class ShoppingBag : AppCompatActivity() {
         binding.rcvPrice.layoutManager = LinearLayoutManager(applicationContext)
         binding.rcvPrice.addItemDecoration(itemDecor)
 
+        binding.btnBuy.setOnClickListener {
+            var intent = Intent(applicationContext, CompleteProductPage::class.java)
+            intent.putExtra("priceAll", priceAll)
+            startActivity(intent)
+        }
+
     }
 
     override fun onResume() {
@@ -54,6 +61,8 @@ class ShoppingBag : AppCompatActivity() {
 
     fun callProduct(id: Int) {
         productsList.clear()
+        priceList.clear()
+        priceAll = 0
         val orderApi = OrderAPI.create()
         orderApi.callProduct(id)
             .enqueue(object : Callback<List<OrderProductClass>> {

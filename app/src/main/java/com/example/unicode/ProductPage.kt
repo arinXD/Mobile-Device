@@ -31,6 +31,8 @@ class ProductPage : AppCompatActivity() {
         binding = ActivityProductPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         pId = intent.getStringExtra("product_id").toString()
         val pName = intent.getStringExtra("product_name").toString()
         val pPrice = intent.getStringExtra("product_price").toString()
