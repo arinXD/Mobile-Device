@@ -51,9 +51,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:hint="ประเภทสินค้า"
         android:layout_marginBottom="10dp">
-
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextViewProduct"
+            android:id="@+id/dropdowninsert"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

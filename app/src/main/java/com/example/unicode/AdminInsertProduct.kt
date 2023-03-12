@@ -92,9 +92,9 @@ class AdminInsertProduct : AppCompatActivity() {
             onSuccess = { station ->
                 val stationNames = station.map { it.type_name }.toTypedArray()
                 val adapter = ArrayAdapter(this, R.layout.dropdown_item, stationNames)
-                bindingInsertProduct.autoCompleteTextViewProduct.setText("สั่งซื้อสินค้า")
-                bindingInsertProduct.autoCompleteTextViewProduct.setAdapter(adapter)
-                bindingInsertProduct.autoCompleteTextViewProduct.setOnItemClickListener { parent, _, position, _ ->
+                bindingInsertProduct.dropdowninsert.setText("สั่งซื้อสินค้า")
+                bindingInsertProduct.dropdowninsert.setAdapter(adapter)
+                bindingInsertProduct.dropdowninsert.setOnItemClickListener { parent, _, position, _ ->
                     one = parent.getItemIdAtPosition(position).toInt()
                 }
             },

@@ -1,31 +1,35 @@
 package com.example.unicode
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.unicode.databinding.ActivityAdminEditProductBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class AdminEditProduct : AppCompatActivity() {
     private lateinit var bindingEdit : ActivityAdminEditProductBinding
     val createClient = AdminProductAPI.create()
-
+    var one : Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         bindingEdit = ActivityAdminEditProductBinding.inflate(layoutInflater)
         setContentView(bindingEdit.root)
-
+        showDropdownone ()
 //        intent.putExtra("detail",mDetail)
 //        intent.putExtra("photo",mPhoto)
 //        intent.putExtra("amount",mAmount)
 //        intent.putExtra("subtype_id",mSubtype_id)
-
-        val mId = intent.getIntExtra("id",0)
+        val mId = intent.getStringExtra("id")
         val mName = intent.getStringExtra("product_name")
         val mPrice = intent.getIntExtra("price",0)
 
@@ -34,21 +38,17 @@ class AdminEditProduct : AppCompatActivity() {
         val mAmount = intent.getIntExtra("amount",0)
         val mSubtype_id = intent.getStringExtra("subtype_id")
 
-        bindingEdit.btnid.setText(mId.toString())
-        bindingEdit.btnid.isEnabled = false
         bindingEdit.edtNameProduct.setText(mName)
         bindingEdit.edtPriceProduct.setText(mPrice.toString())
         bindingEdit.edtDetailProduct.setText(mDetail)
         bindingEdit.edtImage.setText(mPhoto.toString())
         bindingEdit.edtSizeS.setText(mAmount.toString())
-        bindingEdit.edtPriceSubtypeid.setText(mSubtype_id.toString())
 
-        bindingEdit.btnReset.setOnClickListener {
-            resetProduct()
+        bindingEdit.btnAddProduct.setOnClickListener{
+            saveProduct()
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
 
     //    override fun onResume() {
@@ -60,15 +60,15 @@ class AdminEditProduct : AppCompatActivity() {
         { finish() }
         return super.onOptionsItemSelected(item)
     }
-    fun saveProduct(v: View) {
+    fun saveProduct() {
         createClient.updateProduct(
-            bindingEdit.btnid.text.toString().toInt(),
+            intent.getStringExtra("id").toString().toInt(),
             bindingEdit.edtNameProduct.text.toString(),
             bindingEdit.edtPriceProduct.text.toString().toInt(),
             bindingEdit.edtDetailProduct.text.toString(),
             bindingEdit.edtImage.text.toString(),
             bindingEdit.edtSizeS.text.toString().toInt(),
-            bindingEdit.edtPriceSubtypeid.text.toString().toInt()
+            one+1
         ).enqueue(object : Callback<AdminProduct> {
             override fun onResponse(call: Call<AdminProduct>, response: Response<AdminProduct>) {
                 if(response.isSuccessful) {
@@ -87,15 +87,46 @@ class AdminEditProduct : AppCompatActivity() {
             }
         })
     }
-    private fun resetProduct() {
-        bindingEdit.edtNameProduct.text?.clear()
-        bindingEdit.edtPriceProduct.text?.clear()
-        bindingEdit.edtDetailProduct.text?.clear()
-        bindingEdit.edtImage.text?.clear()
-        bindingEdit.edtSizeS.text?.clear()
-        bindingEdit.cdS.clearFocus()
-        bindingEdit.edtPriceSubtypeid.text?.clear()
-//        bindingInsertProduct.cdM.clearFocus()
-//        bindingInsertProduct.cdL.clearFocus()
+    fun callprotype(onSuccess: (List<producttypeClass>) -> Unit, onFailure: (Throwable) -> Unit) {
+        val api:AdminProductAPI= Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:3000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(AdminProductAPI::class.java)
+        api.retrieveProductType().enqueue(object : Callback<List<producttypeClass>> {
+            override fun onResponse(call: Call<List<producttypeClass>>, response: Response<List<producttypeClass>>) {
+                if (response.isSuccessful) {
+                    val van = response.body()
+                    if (van != null) {
+                        onSuccess(van)
+                    }
+                } else {
+                    onFailure(Throwable("Failed to fetch cities"))
+                }
+            }
+
+            override fun onFailure(call: Call<List<producttypeClass>>, t: Throwable) {
+                onFailure(t)
+            }
+        })
+
+    }
+    private fun showDropdownone () {
+        callprotype(
+
+            onSuccess = { station ->
+                val mSubtype_id = intent.getStringExtra("subtype_id")
+                val stationNames = station.map { it.type_name }.toTypedArray()
+                val adapter = ArrayAdapter(this, R.layout.dropdown_item, stationNames)
+                bindingEdit.autoCompleteTextViewProduct.setText(mSubtype_id)
+                bindingEdit.autoCompleteTextViewProduct.setAdapter(adapter)
+                bindingEdit.autoCompleteTextViewProduct.setOnItemClickListener { parent, _, position, _ ->
+                    one = parent.getItemIdAtPosition(position).toInt()
+                }
+            },
+            onFailure = { error ->
+                Log.e("AddTimeStationActivity", "Failed to fetch Station", error)
+            }
+        )
     }
 }
