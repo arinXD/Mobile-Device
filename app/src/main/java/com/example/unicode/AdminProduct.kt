@@ -23,7 +23,7 @@ data class AdminProduct(
     @SerializedName("amount") val amount: Int,
 
     @Expose
-    @SerializedName("subtype_id") val subtype_id: Int){}
+    @SerializedName("product_type") val product_type: Int){}
 //
 //    @Expose
 //    @SerializedName("subtype_name") val subtype_name: String,

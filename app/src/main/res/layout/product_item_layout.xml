@@ -8,8 +8,11 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="15dp"
         app:cardBackgroundColor="@color/white"
         app:cardUseCompatPadding="true"
         android:background="@drawable/product_item_shape">
