@@ -16,10 +16,9 @@ import retrofit2.Response
 class FavoritePage : AppCompatActivity() {
 
     private lateinit var binding: ActivityFavoritePageBinding
-//    var productsList = arrayListOf<ProductClass>()
     var productsList = arrayListOf<FavProduct>()
-
     lateinit var session: SessionManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityFavoritePageBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)

@@ -23,6 +23,7 @@
                 android:gravity="center" />
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/lastProduct"
+                android:scaleType="centerCrop"
                 android:layout_below="@id/h1"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"

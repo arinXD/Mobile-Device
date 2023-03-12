@@ -132,6 +132,7 @@ class ProductPage : AppCompatActivity() {
                     override fun onResponse(call: Call<OrderDetail>, response: Response<OrderDetail>) {
                         if (response.isSuccessful) {
                             Toast.makeText(applicationContext,"Add to shop bag", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(applicationContext, ShoppingBag::class.java))
                             finish()
                         }else{
                             Toast.makeText(applicationContext,"Add to shop bag failed", Toast.LENGTH_SHORT).show()

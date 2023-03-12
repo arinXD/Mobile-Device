@@ -8,6 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface OrderAPI {
+//    /order/product/:user_id
+    @GET("order/product/{user_id}")
+    fun callProduct(
+        @Path("user_id") user_id: Int
+    ): Call<List<OrderProductClass>>
 
     @GET("myOrder/{id}")
     fun retrieveOrder(
@@ -25,6 +30,10 @@ interface OrderAPI {
         @Field("product_id") product_id: Int,
         @Field("size_id") size_id: Int,
     ):Call<OrderDetail>
+
+    @DELETE("delete/order/{order_datial_id}")
+    fun deleteOrderDetail(
+        @Path("order_datial_id") id:Int): Call<OrderProductClass>
 
     companion object {
         fun create(): OrderAPI {

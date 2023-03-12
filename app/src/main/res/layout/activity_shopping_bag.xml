@@ -18,7 +18,7 @@
         android:padding="10dp"
         android:layout_marginBottom="10dp"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv"
+        android:id="@+id/rcvProduct"
         android:layout_below="@id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         android:padding="10dp">
         <TextView
             android:id="@+id/orderTxt"
@@ -41,19 +42,20 @@
             android:id="@+id/totalTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rcvProductOrder"
+            android:layout_below="@id/rcvPrice"
             android:text="ยอดรวม"
             android:textColor="@color/black"
             android:textSize="16sp" />
         <TextView
+            android:id="@+id/priceAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="000 บาท"
+            android:text="0 บาท"
             android:textColor="@color/black"
-            android:layout_below="@id/rcvProductOrder"
+            android:layout_below="@id/rcvPrice"
             android:layout_alignParentRight="true"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvProductOrder"
+            android:id="@+id/rcvPrice"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
