@@ -23,6 +23,9 @@ class ProductsAdapter(val items : ArrayList<ProductClass>, val context: Context)
                     intent.putExtra("product_name",item.product_name)
                     intent.putExtra("product_price",item.price.toString())
                     intent.putExtra("product_photo",item.photo)
+                    intent.putExtra("product_amount",item.amount.toString())
+//                    println("-----------------------------------------------")
+//                    println(item.amount.toString())
                     contextView.startActivity(intent)
                 }
             }

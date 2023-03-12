@@ -2,20 +2,22 @@ package com.example.unicode
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.example.unicode.databinding.ActivityShowEditBinding
+import com.example.unicode.databinding.ActivityAddressEditBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ShowEditActivity : AppCompatActivity() {
-    private lateinit var bindingEdit: ActivityShowEditBinding
+class AddressEdit : AppCompatActivity() {
+    private lateinit var bindingEdit: ActivityAddressEditBinding
     val createClient = AddressAPI.create()
     var mId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindingEdit = ActivityShowEditBinding.inflate(layoutInflater)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        bindingEdit = ActivityAddressEditBinding.inflate(layoutInflater)
         setContentView(bindingEdit.root)
         mId = intent.getStringExtra("mId").toString()
         val mAddress = intent.getStringExtra("mAddress")
@@ -29,6 +31,12 @@ class ShowEditActivity : AppCompatActivity() {
         bindingEdit.editdistrict.setText(mDistrict)
         bindingEdit.editzipCode.setText(mZipcode)
         bindingEdit.editphone.setText(mPhone)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun saveStudent(v: View) {

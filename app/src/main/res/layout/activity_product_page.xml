@@ -79,33 +79,48 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="xxxxx"/>
+                <EditText
+                    android:id="@+id/amountOrder"
+                    android:hint="จำนวนสินค้า"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="15sp"
+                    android:inputType="number"
+                    android:layout_below="@id/detail"/>
+                <EditText
+                    android:id="@+id/sizeOrder"
+                    android:hint="ไซส์"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:layout_below="@id/detail"
+                    android:layout_toRightOf="@id/amountOrder"/>
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnPickUp"
-                    android:layout_below="@id/detail"
+                    android:layout_below="@id/sizeOrder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="ใส่ตะกร้า"
                     android:textColor="@color/white"
                     android:background="@color/black"/>
+
             </RelativeLayout>
 
         </RelativeLayout>
     </ScrollView>
-<!--        android:layout_above="@id/bottom_navigation"-->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/product_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
-        app:menu="@menu/product_nav_menu"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/border_shape" />
 <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:id="@+id/bottom_navigation"-->
+<!--        android:id="@+id/product_nav"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
 <!--        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"-->
-<!--        app:menu="@menu/bottom_nav_menu" />-->
+<!--        app:menu="@menu/product_nav_menu"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:background="@drawable/border_shape" />-->
+
 </RelativeLayout>

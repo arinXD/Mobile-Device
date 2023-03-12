@@ -135,7 +135,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ShowEditActivity"
+            android:name=".AddressEdit"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

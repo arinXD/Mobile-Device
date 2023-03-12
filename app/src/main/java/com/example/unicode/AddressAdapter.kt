@@ -5,17 +5,11 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 //import com.example.unicode.address
-import com.example.unicode.*
-import com.example.unicode.databinding.AddressDialogLayoutBinding
 import com.example.unicode.databinding.AddressItemBinding
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -25,6 +19,7 @@ class AddressAdapter(val addresslist : ArrayList<address>, val context: Context)
     inner class ViewHolder(view: View, val binding: AddressItemBinding) :
         RecyclerView.ViewHolder(view) {
         init {
+
             binding.deleteitem.setOnClickListener {
                 val builder = AlertDialog.Builder(itemView.context)
                 builder.setTitle("Delete Confirmation")
@@ -70,7 +65,7 @@ class AddressAdapter(val addresslist : ArrayList<address>, val context: Context)
             binding.edititem.setOnClickListener {
                 val item = addresslist[adapterPosition]
                 val contextView : Context = view.context
-                val intant = Intent(contextView, ShowEditActivity::class.java)
+                val intant = Intent(contextView, AddressEdit::class.java)
                 intant.putExtra("mId",item.id.toString())
                 intant.putExtra("mAddress",item.address)
                 intant.putExtra("mProvince",item.province)
@@ -89,8 +84,12 @@ class AddressAdapter(val addresslist : ArrayList<address>, val context: Context)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val session = SessionManager(context)
+        val name: String? = session.pref.getString(SessionManager.KEY_NAME, null)
         val binding = holder.binding
         val currentItem = addresslist!![position]
+
+        binding.Namenaja.text = name
         binding.Address.text = "Address: " + currentItem.address
         binding.province.text = "Province: " + currentItem.province
         binding.district.text = "District: " + currentItem.district

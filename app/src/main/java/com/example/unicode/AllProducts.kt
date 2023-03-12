@@ -76,7 +76,10 @@ class AllProducts : AppCompatActivity() {
                 var intent = Intent(applicationContext, FavoritePage::class.java)
                 startActivity(intent)
             }
-            R.id.basket -> Toast.makeText(applicationContext, "Basket", Toast.LENGTH_LONG).show()
+            R.id.basket -> {
+                var intent = Intent(applicationContext, ShoppingBag::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -3,7 +3,8 @@ package com.example.unicode
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class order (
+data class Order (
+
     @Expose
     @SerializedName("id") val id: Int,
 

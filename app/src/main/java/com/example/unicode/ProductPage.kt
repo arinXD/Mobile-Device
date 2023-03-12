@@ -15,9 +15,12 @@ import retrofit2.Response
 class ProductPage : AppCompatActivity() {
     private lateinit var binding: ActivityProductPageBinding
     val productClient = ProductAPI.create()
+    val orderApi = OrderAPI.create()
     val favClient = FavAPI.create()
     var sizeList = arrayListOf<SizeClass>()
+    var checkSizeList = arrayListOf<String>()
     var pId: String = ""
+    var orderId: Int = 0
     lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +35,16 @@ class ProductPage : AppCompatActivity() {
         val pPrice = intent.getStringExtra("product_price").toString()
         val pPhoto = intent.getStringExtra("product_photo").toString()
         val pDetail = intent.getStringExtra("product_detail")
+        val pAmount = intent.getStringExtra("product_amount").toString().toInt()
+
+        println("-----------------------------------------------")
+        println("product ID: "+pId)
+        println("amount: "+pAmount)
         val uId: String? = session.pref.getString(SessionManager.KEY_ID, null)
+        if (pAmount==0){
+            binding.btnPickUp.text = "สินค้าหมด"
+            binding.btnPickUp.setBackgroundColor(0xFF7A7A7A.toInt());
+        }
 
         binding.productName.text = pName
         binding.productPrice.text = pPrice + " THB."
@@ -48,18 +60,107 @@ class ProductPage : AppCompatActivity() {
             true
         )
 
-        binding.productNav.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.fav -> {
-                    var intent = Intent(applicationContext, FavoritePage::class.java)
-                    startActivity(intent)
+        orderApi.retrieveOrder(uId.toString().toInt())
+            .enqueue(object : Callback<Order> {
+                override fun onResponse(call: Call<Order>, response: Response<Order>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(applicationContext,"can find order", Toast.LENGTH_SHORT).show()
+                        orderId = response.body()?.id!!.toInt()
+                        println("orderId 0: "+orderId)
+                    }else{
+                        Toast.makeText(applicationContext,"cant find order id", Toast.LENGTH_SHORT).show()
+                    }
                 }
-                R.id.basket -> {
-                    Toast.makeText(applicationContext, "Basket", Toast.LENGTH_LONG).show()
+                override fun onFailure(call: Call<Order>, t: Throwable) {
+                    println(t.message)
+                    Toast.makeText(
+                        applicationContext,
+                        "error on failed" + t.message,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
+            })
+        println("orderId -1: "+orderId)
+
+        binding.btnPickUp.setOnClickListener {
+            if(binding.amountOrder.text.isEmpty() || binding.sizeOrder.text.isEmpty()){
+                Toast.makeText(applicationContext, "กรอกรายละเอียดให้ครบ", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
             }
-            true
+            if (pAmount==0){
+                Toast.makeText(applicationContext, "สินค้าหมด", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            if (!checkSizeList.contains(binding.sizeOrder.text.toString().uppercase())){
+                Toast.makeText(applicationContext, "ไม่มีไซส์", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            var size_id = 0
+            val sizeString = binding.sizeOrder.text.toString().uppercase()
+            if (sizeString=="S"){
+                size_id = 1
+            }else if (sizeString=="M"){
+                size_id = 2
+            }else if (sizeString=="L"){
+                size_id = 3
+            }else if (sizeString=="XL"){
+                size_id = 4
+            }
+            var priceAll = pPrice.toInt()*binding.amountOrder.text.toString().toInt()
+            var amount = binding.amountOrder.text.toString().toInt()
+            println("_________________")
+            println("size Contain "+checkSizeList.contains(binding.sizeOrder.text.toString()))
+            println("______________________________")
+            println("UID "+uId.toString().toInt())
+            println("amount "+amount)
+            println("price "+pPrice.toInt())
+            println("priceAll "+priceAll)
+            println("orderId "+orderId)
+            println("productId "+pId.toInt())
+            println("sizeId "+size_id)
+
+            orderApi.addOrder(
+                uId.toString().toInt(),
+                amount,
+                pPrice.toInt(),
+                priceAll,
+                orderId,
+                pId.toInt(),
+                size_id,
+            )
+                .enqueue(object : Callback<OrderDetail> {
+                    override fun onResponse(call: Call<OrderDetail>, response: Response<OrderDetail>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(applicationContext,"Add to shop bag", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }else{
+                            Toast.makeText(applicationContext,"Add to shop bag failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    override fun onFailure(call: Call<OrderDetail>, t: Throwable) {
+                        println(t.message)
+                        Toast.makeText(
+                            applicationContext,
+                            "error on failed" + t.message,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                })
+
         }
+
+//        binding.productNav.setOnItemSelectedListener {
+//            when (it.itemId) {
+//                R.id.fav -> {
+//                    var intent = Intent(applicationContext, FavoritePage::class.java)
+//                    startActivity(intent)
+//                }
+//                R.id.basket -> {
+//                    Toast.makeText(applicationContext, "Basket", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//            true
+//        }
 
         binding.btnFav.setOnClickListener {
             favClient.addFav(uId.toString().toInt(),pId.toInt())
@@ -112,6 +213,7 @@ class ProductPage : AppCompatActivity() {
                                 it.id, it.size
                             )
                         )
+                        checkSizeList.add(it.size)
                     }
                     binding.rcvSize.adapter = SizeAdapter(sizeList, applicationContext)
                 }
