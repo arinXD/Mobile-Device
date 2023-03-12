@@ -3,6 +3,7 @@ package com.example.unicode
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,7 +44,16 @@ class ProductPage : AppCompatActivity() {
         val uId: String? = session.pref.getString(SessionManager.KEY_ID, null)
         if (pAmount==0){
             binding.btnPickUp.text = "สินค้าหมด"
-            binding.btnPickUp.setBackgroundColor(0xFF7A7A7A.toInt());
+            binding.btnPickUp.isEnabled = false
+        }
+        binding.btnplusnumber.setOnClickListener {
+            var amount = (binding.amountOrder.text.toString().toInt())+1
+            binding.amountOrder.setText(amount.toString())
+        }
+        binding.btndeletenumber.setOnClickListener {
+            var amount = (binding.amountOrder.text.toString().toInt())-1
+            if(amount<1) return@setOnClickListener
+            binding.amountOrder.setText(amount.toString())
         }
 
         binding.productName.text = pName
@@ -64,7 +74,7 @@ class ProductPage : AppCompatActivity() {
             .enqueue(object : Callback<Order> {
                 override fun onResponse(call: Call<Order>, response: Response<Order>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(applicationContext,"can find order", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(applicationContext,"can find order", Toast.LENGTH_SHORT).show()
                         orderId = response.body()?.id!!.toInt()
                         println("orderId 0: "+orderId)
                     }else{
@@ -83,20 +93,28 @@ class ProductPage : AppCompatActivity() {
         println("orderId -1: "+orderId)
 
         binding.btnPickUp.setOnClickListener {
-            if(binding.amountOrder.text.toString().isEmpty() || binding.sizeOrder.text.isEmpty()){
-                Toast.makeText(applicationContext, "กรอกรายละเอียดให้ครบ", Toast.LENGTH_LONG).show()
+            var size = ""
+            if (
+                !( (binding.s.isChecked) || (binding.m.isChecked) || (binding.l.isChecked) || (binding.xl.isChecked) )
+            ){
+                Toast.makeText(applicationContext, "เลือกไซส์", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
+            }else{
+                var selectID: Int = binding.radioGroupSize.checkedRadioButtonId
+                var radioButtonChecked: RadioButton = findViewById(selectID)
+                size = radioButtonChecked.text.toString()
             }
+
             if (pAmount==0){
                 Toast.makeText(applicationContext, "สินค้าหมด", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            if (!checkSizeList.contains(binding.sizeOrder.text.toString().uppercase())){
+            if (!checkSizeList.contains(size)){
                 Toast.makeText(applicationContext, "ไม่มีไซส์", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             var size_id = 0
-            val sizeString = binding.sizeOrder.text.toString().uppercase()
+            val sizeString = size
             if (sizeString=="S"){
                 size_id = 1
             }else if (sizeString=="M"){
@@ -109,7 +127,7 @@ class ProductPage : AppCompatActivity() {
             var priceAll = pPrice.toInt()*binding.amountOrder.text.toString().toInt()
             var amount = binding.amountOrder.text.toString().toInt()
             println("_________________")
-            println("size Contain "+checkSizeList.contains(binding.sizeOrder.text.toString()))
+            println("size Contain "+checkSizeList.contains(size))
             println("______________________________")
             println("UID "+uId.toString().toInt())
             println("amount "+amount)
