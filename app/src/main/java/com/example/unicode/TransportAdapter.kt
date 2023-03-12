@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.unicode.databinding.CraditItemBinding
 import com.example.unicode.databinding.TransportItemBinding
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TransportAdapter(val transportlist : ArrayList<order>, val context: Context) :
+class TransportAdapter(val transportlist : ArrayList<Order>, val context: Context) :
     RecyclerView.Adapter<TransportAdapter.ViewHolder>(){
     class ViewHolder(view: View, val binding: TransportItemBinding) :
         RecyclerView.ViewHolder(view) {

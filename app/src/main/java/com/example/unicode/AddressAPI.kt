@@ -8,8 +8,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface AddressAPI {
-    @GET("alladdress")
-    fun retrieveAddress(): Call<List<address>>
+    @GET("allAddress/{id}")
+    fun retrieveAddress(
+        @Path("id") id: Int
+    ): Call<List<address>>
 
     @FormUrlEncoded
     @POST("address")

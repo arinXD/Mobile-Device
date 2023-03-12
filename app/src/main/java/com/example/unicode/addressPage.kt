@@ -21,11 +21,13 @@ class addressPage : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddressPageBinding
     var addresslist = arrayListOf<address>()
+    lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAddressPageBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        session = SessionManager(applicationContext)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -59,8 +61,8 @@ class addressPage : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AddressAPI ::class.java)
-
-        serv.retrieveAddress()
+        val id: String? = session.pref.getString(SessionManager.KEY_ID, null)
+        serv.retrieveAddress(id.toString().toInt())
             .enqueue(object : Callback<List<address>> {
                 override fun onResponse(call: Call<List<address>>, response: Response<List<address>>) {
                     response.body()?.forEach{
@@ -101,8 +103,9 @@ class addressPage : AppCompatActivity() {
             val district = districtEditText.text.toString()
             val zipCode = zipCodeEditText.text.toString()
             val phone = phoneEditText.text.toString().toInt()
+            val id: String? = session.pref.getString(SessionManager.KEY_ID, null)
 
-            api.insertAddr(address, province, district, zipCode, phone,1)
+            api.insertAddr(address, province, district, zipCode, phone,id.toString().toInt())
                 .enqueue(object : Callback<address> {
                     override fun onResponse(
                         call: Call<address>,

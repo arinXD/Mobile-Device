@@ -18,7 +18,6 @@ class AccountPage : AppCompatActivity() {
         session = SessionManager(applicationContext)
         setContentView(binding.root)
 
-
         val email: String? = session.pref.getString(SessionManager.KEY_EMAIL, null)
         val userName: String? = session.pref.getString(SessionManager.KEY_NAME, null)
 
