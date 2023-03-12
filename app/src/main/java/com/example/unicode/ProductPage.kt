@@ -83,7 +83,7 @@ class ProductPage : AppCompatActivity() {
         println("orderId -1: "+orderId)
 
         binding.btnPickUp.setOnClickListener {
-            if(binding.amountOrder.text.isEmpty() || binding.sizeOrder.text.isEmpty()){
+            if(binding.amountOrder.text.toString().isEmpty() || binding.sizeOrder.text.isEmpty()){
                 Toast.makeText(applicationContext, "กรอกรายละเอียดให้ครบ", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
