@@ -6,8 +6,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface CraditAPI {
-    @GET("allcradit")
-    fun retrieveCradit(): Call<List<cradit>>
+    @GET("credit/{user_id}")
+    fun myCredit(
+        @Path("user_id") user_id: Int
+    ): Call<List<Credit>>
 
     @FormUrlEncoded
     @POST("cradit")
@@ -17,7 +19,7 @@ interface CraditAPI {
         @Field("card_no") card_no: String,
         @Field("expire_date") expire_date: String,
         @Field("CVV") cvv: Int,
-        @Field("user_id") user_id: Int): Call<cradit>
+        @Field("user_id") user_id: Int): Call<Credit>
 
     @FormUrlEncoded
     @PUT("cradit/{id}")
@@ -27,11 +29,11 @@ interface CraditAPI {
         @Field("card_no") card_no: String,
         @Field("expire_date") expire_date: String,
         @Field("CVV") cvv: Int,
-        @Field("user_id") user_id: Int): Call<cradit>
+        @Field("user_id") user_id: Int): Call<Credit>
 
     @DELETE("/cradit/{id}") /// Delete
     fun deleteCradit(
-        @Path("id") id: Int): Call<cradit>
+        @Path("id") id: Int): Call<Credit>
 
     companion object {
         fun create(): CraditAPI {

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.example.unicode.DatePicker
 import com.example.unicode.databinding.ActivityInsertCraditBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class InsertCradit : AppCompatActivity() {
     private lateinit var bindingInsert: ActivityInsertCraditBinding
-    var craditlist = arrayListOf<cradit>()
+    var craditlist = arrayListOf<Credit>()
     lateinit var session: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +23,7 @@ class InsertCradit : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        bindingInsert.btnAddCradit.setOnClickListener{
+        bindingInsert.btnAddCradit.setOnClickListener {
             val id: String? = session.pref.getString(SessionManager.KEY_ID, null)
             addCradit(id.toString())
         }
@@ -41,7 +40,8 @@ class InsertCradit : AppCompatActivity() {
         val newDateFragment = DatePickerCredit()
         newDateFragment.show(supportFragmentManager, "Date Picker")
     }
-    private fun addCradit(id:String){
+
+    private fun addCradit(id: String) {
         val api: CraditAPI = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:3000/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -51,23 +51,28 @@ class InsertCradit : AppCompatActivity() {
             bindingInsert.editName.text.toString(),
             bindingInsert.editCardID.text.toString(),
             bindingInsert.editexpiredate.text.toString(),
-            bindingInsert.editcvv.text.toString().toInt(),id.toString().toInt()
-        ).enqueue(object : Callback<cradit> {
+            bindingInsert.editcvv.text.toString().toInt(),
+            id.toInt()
+        ).enqueue(object : Callback<Credit> {
             override fun onResponse(
-                call: Call<cradit>,
-                response: retrofit2.Response<cradit>
+                call: Call<Credit>,
+                response: retrofit2.Response<Credit>
             ) {
-                if (response.isSuccessful()){
-                    Toast.makeText(applicationContext,"Successfully Inserted", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful()) {
+                    Toast.makeText(applicationContext, "Successfully Inserted", Toast.LENGTH_SHORT)
+                        .show()
                     finish()
-                }
-                else{
-                    Toast.makeText(applicationContext,"Inserted Failed", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(applicationContext, "Inserted Failed", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onFailure(call: Call<cradit>, t: Throwable) {
-                Toast.makeText(applicationContext,"Error onFailuse "+t.message, Toast.LENGTH_LONG).show()
+            override fun onFailure(call: Call<Credit>, t: Throwable) {
+                Toast.makeText(
+                    applicationContext,
+                    "Error onFailuse " + t.message,
+                    Toast.LENGTH_LONG
+                ).show()
             }
         })
     }

@@ -14,10 +14,15 @@ interface OrderAPI {
         @Path("user_id") user_id: Int
     ): Call<List<OrderProductClass>>
 //    /order/:address_id
-    @GET("/order/{address_id}")
+    @GET("order/{address_id}")
     fun orderAddress(
         @Path("address_id") id: Int
     ): Call<AddressClass>
+
+    @GET("order/credit/{credit_card_id}")
+    fun orderCredit(
+        @Path("credit_card_id") id: Int
+    ): Call<Credit>
 
     @GET("myOrder/{id}")
     fun retrieveOrder(
@@ -45,6 +50,12 @@ interface OrderAPI {
     fun updateOrderAddress(
         @Path("order_id") order_id: Int,
         @Path("address_id") address_id: Int,
+    ): Call<Order>
+
+    @PUT("order/credit/{order_id}/{credit_card_id}")
+    fun updateOrderCredit(
+        @Path("order_id") order_id: Int,
+        @Path("credit_card_id") credit_card_id: Int,
     ): Call<Order>
 
     companion object {

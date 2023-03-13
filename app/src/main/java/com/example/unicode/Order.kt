@@ -18,6 +18,9 @@ data class Order (
     @SerializedName("user_address_id") val user_address_id: Int,
 
     @Expose
+    @SerializedName("credit_card_id") val credit_card_id: Int,
+
+    @Expose
     @SerializedName("user_id") val user_id: Int,
 
     @Expose

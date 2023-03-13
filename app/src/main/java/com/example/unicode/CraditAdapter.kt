@@ -1,22 +1,18 @@
 package com.example.unicode
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.example.unicode.databinding.AddressItemBinding
 import com.example.unicode.databinding.CraditItemBinding
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CraditAdapter (val craditlist : ArrayList<cradit>, val context: Context) :
+class CraditAdapter (val craditlist : ArrayList<Credit>, val context: Context) :
     RecyclerView.Adapter<CraditAdapter.ViewHolder>() {
     inner class ViewHolder(view: View, val binding: CraditItemBinding) :
         RecyclerView.ViewHolder(view) {
@@ -28,15 +24,11 @@ class CraditAdapter (val craditlist : ArrayList<cradit>, val context: Context) :
                 builder.setNegativeButton("Yes") { dialog, which ->
                     val position = adapterPosition
                     val addressId = craditlist[position].id
-                    val serv: CraditAPI = Retrofit.Builder()
-                        .baseUrl("http://10.0.2.2:3000/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build()
-                        .create(CraditAPI::class.java)
-                    serv.deleteCradit(addressId).enqueue(object : retrofit2.Callback<cradit> {
+                    val serv = CraditAPI.create()
+                    serv.deleteCradit(addressId).enqueue(object : retrofit2.Callback<Credit> {
                         override fun onResponse(
-                            call: retrofit2.Call<cradit>,
-                            response: retrofit2.Response<cradit>
+                            call: retrofit2.Call<Credit>,
+                            response: retrofit2.Response<Credit>
                         ) {
                             if (response.isSuccessful) {
                                 Toast.makeText(
@@ -48,7 +40,7 @@ class CraditAdapter (val craditlist : ArrayList<cradit>, val context: Context) :
                             }
                         }
 
-                        override fun onFailure(call: retrofit2.Call<cradit>, t: Throwable) {
+                        override fun onFailure(call: retrofit2.Call<Credit>, t: Throwable) {
                             Toast.makeText(
                                 context, "Update Failure",
                                 Toast.LENGTH_LONG
@@ -74,7 +66,7 @@ class CraditAdapter (val craditlist : ArrayList<cradit>, val context: Context) :
         val binding = holder.binding
         val currentItem = craditlist!![position]
         binding.Namenaja.text = currentItem.firstname
-        binding.Cardno.text = "Card No: " + getMaskedCardNumber(currentItem.card_no)
+        binding.Cardno.text = "Card No: " + getMaskedCardNumber(currentItem.card_no.toString())
         binding.expiredate.text = "Expire Data: " + formatDate(currentItem.expire_date)
         binding.cvv.text = "CVV: " + getMaskedCVV(currentItem.cvv)
     }

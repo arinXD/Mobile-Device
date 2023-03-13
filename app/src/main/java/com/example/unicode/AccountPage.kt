@@ -63,12 +63,9 @@ class AccountPage : AppCompatActivity() {
                 R.id.category -> Toast.makeText(applicationContext, "Category", Toast.LENGTH_LONG).show()
                 R.id.home ->{
                     intent = Intent(applicationContext,AllProducts::class.java)
-//                    intent.putStringArrayListExtra("userData",userData)
                     startActivity(intent)
                 }
-                R.id.account -> {
-                    ""
-                }
+                R.id.account -> ""
             }
             true
         }
@@ -90,7 +87,7 @@ class AccountPage : AppCompatActivity() {
             R.id.fav -> {
                 startActivity(Intent(applicationContext, FavoritePage::class.java))
             }
-            R.id.basket -> Toast.makeText(applicationContext, "Basket", Toast.LENGTH_LONG).show()
+            R.id.basket -> startActivity(Intent(applicationContext, ShoppingBag::class.java))
         }
         return super.onOptionsItemSelected(item)
     }

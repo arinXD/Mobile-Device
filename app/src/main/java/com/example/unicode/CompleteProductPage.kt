@@ -18,6 +18,7 @@ class CompleteProductPage : AppCompatActivity() {
     lateinit var session: SessionManager
     var orderId: Int = 0
     var addressID: Int = 0
+    var creditID: Int = 0
     var id = 0
     private val orderApi = OrderAPI.create()
 
@@ -46,6 +47,9 @@ class CompleteProductPage : AppCompatActivity() {
 
         binding.editAddressProductComplete.setOnClickListener {
             startActivity(Intent(applicationContext, SelectAddress::class.java))
+        }
+        binding.editCreditProductComplete.setOnClickListener {
+            startActivity(Intent(applicationContext, SelectCreditCard::class.java))
         }
     }
 
@@ -106,6 +110,7 @@ class CompleteProductPage : AppCompatActivity() {
 //                        Toast.makeText(applicationContext,"can find order", Toast.LENGTH_SHORT).show()
                     orderId = response.body()?.id!!.toInt()
                     addressID = response.body()?.user_address_id!!.toInt()
+                    creditID = response.body()?.credit_card_id!!.toInt()
 
                     println("*****************************************")
                     println(response.body()?.user_address_id.toString())
@@ -129,6 +134,28 @@ class CompleteProductPage : AppCompatActivity() {
                             }
                         })
                     }
+                    println("*****************************************")
+                    println(response.body()?.credit_card_id.toString())
+                    println("*****************************************")
+                    if (response.body()?.credit_card_id.toString().toInt() == 0) {
+                        binding.editCreditProductComplete.text = "กรุณาเลือกบัตรเครดิต"
+                    } else {
+                        orderApi.orderCredit(creditID).enqueue(object : Callback<Credit> {
+                            override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
+                                if (response.isSuccessful) {
+                                    println(response.body())
+                                    binding.editCreditProductComplete.text = "${response.body()?.firstname}\n"+
+                                            "${response.body()?.card_no.toString()}\n${response.body()?.expire_date.toString()}"
+                                } else {
+                                    Toast.makeText(applicationContext,"cant find address id", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            override fun onFailure(call: Call<Credit>, t: Throwable) {
+                                Toast.makeText(applicationContext,"error on orderCredit" + t.message,Toast.LENGTH_LONG).show()
+                            }
+                        })
+                    }
+
                     binding.createdAt.text = response.body()?.created_at.toString()
                 } else {
                     Toast.makeText(applicationContext, "cant find order id", Toast.LENGTH_SHORT).show()
