@@ -84,11 +84,7 @@ class addressPage : AppCompatActivity() {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.address_dialog_layout,null)
         val myBuilder = AlertDialog.Builder(this)
 
-        val api: AddressAPI = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:3000/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(AddressAPI::class.java)
+        val api = AddressAPI.create()
         myBuilder.setView(mDialogView)
         ///save Button
         myBuilder.setNegativeButton("Save"){dialog, _ ->
@@ -143,6 +139,5 @@ class addressPage : AppCompatActivity() {
             dialog.dismiss()
         }
         myBuilder.show()
-
     }
 }

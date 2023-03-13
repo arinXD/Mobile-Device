@@ -23,7 +23,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".SeeTransportUser"
+            android:name=".TransportUser"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
