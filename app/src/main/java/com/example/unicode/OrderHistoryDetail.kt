@@ -17,7 +17,6 @@ class OrderHistoryDetail : AppCompatActivity() {
     private lateinit var binding: ActivityOrderHistoryDetailBinding
     lateinit var session: SessionManager
     var orderId = 0
-    var priceAll = 0
     var orderAPI = OrderAPI.create()
     override fun onCreate(savedInstanceState: Bundle?) {
         session = SessionManager(applicationContext)
@@ -34,10 +33,26 @@ class OrderHistoryDetail : AppCompatActivity() {
     }
 
     override fun onResume() {
-        priceAll = intent.getIntExtra("priceAll", 0)
         super.onResume()
         findOrder(orderId)
-        binding.priceTxt.text = "รวมทั้งหมด: ${priceAll}"
+        var priceAll = 0
+        orderAPI.findOrderDetail(orderId).enqueue(object : Callback<List<OrderDetail>> {
+            override fun onResponse(call: Call<List<OrderDetail>>, response: Response<List<OrderDetail>>) {
+                if (response.isSuccessful) {
+                    response.body()?.forEach {
+                        priceAll+= it.price_all
+                    }
+                    binding.priceTxt.text = "รวมทั้งหมด: ${priceAll}"
+                } else {
+                    Toast.makeText(applicationContext, "cant find order id", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<OrderDetail>>, t: Throwable) {
+                println(t.message)
+                Toast.makeText(applicationContext, "error on failed" + t.message, Toast.LENGTH_LONG).show()
+            }
+        })
     }
     //    create menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

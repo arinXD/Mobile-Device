@@ -3,6 +3,7 @@ package com.example.unicode
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import com.example.unicode.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

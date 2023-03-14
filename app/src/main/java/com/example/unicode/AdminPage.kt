@@ -1,10 +1,14 @@
 package com.example.unicode
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +21,7 @@ class AdminPage : AppCompatActivity(), AdminProductsAdapter.MyClickListener{
     private lateinit var binding : ActivityAdminPageBinding
     var productList = arrayListOf<AdminProduct>()
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,6 +39,54 @@ class AdminPage : AppCompatActivity(), AdminProductsAdapter.MyClickListener{
         binding.btnAddProduct.setOnClickListener {
             val intent = Intent(applicationContext, AdminInsertProduct::class.java)
             startActivity(intent)
+        }
+        binding.btnAddProductType.setOnClickListener {
+            val mDialogView = LayoutInflater.from(this).inflate(R.layout.product_type_layout,null)
+            val myBuilder = AlertDialog.Builder(this)
+
+            val api = AdminProductAPI.create()
+            myBuilder.setView(mDialogView)
+            ///save Button
+            myBuilder.setNegativeButton("Save"){dialog, _ ->
+                val typeName = mDialogView.findViewById(R.id.edtAddProductType) as EditText
+
+                api.addType(typeName.text.toString())
+                    .enqueue(object : Callback<ProductType> {
+                        override fun onResponse(
+                            call: Call<ProductType>,
+                            response: Response<ProductType>
+                        ) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Successfully Inserted",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                dialog.dismiss()
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Inserted Failed",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ProductType>, t: Throwable) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Error onFailuse " + t.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+
+            }
+            ///Cancel Button
+            myBuilder.setPositiveButton("Cancel",){dialog, which->
+                dialog.dismiss()
+            }
+            myBuilder.show()
         }
 
     }

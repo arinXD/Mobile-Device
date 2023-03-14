@@ -16,42 +16,37 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SelectOrderHistoryAdapter(val orderHistoryList: ArrayList<Order>, val context: Context) :
+class SelectOrderHistoryAdapter(private val orderHistoryList: ArrayList<Order>, val context: Context) :
     RecyclerView.Adapter<SelectOrderHistoryAdapter.ViewHolder>() {
         private val orderApi = OrderAPI.create()
-        val intent = Intent(context, OrderHistoryDetail::class.java)
     inner class ViewHolder(view: View, val binding: OrderHistoryItemsBinding) :
         RecyclerView.ViewHolder(view) {
-//        val intent = Intent(context, OrderHistoryDetail::class.java)
-
         init {
+            var priceAll = 0
             binding.btnOrderDetail.setOnClickListener {
+                var item = orderHistoryList[adapterPosition]
+                orderApi.findOrderDetail(item.id).enqueue(object : Callback<List<OrderDetail>> {
+                    override fun onResponse(call: Call<List<OrderDetail>>, response: Response<List<OrderDetail>>) {
+                        if (response.isSuccessful) {
+                            response.body()?.forEach {
+                                priceAll+= it.price_all
+                            }
+                            binding.priceTxt.text = "รวมทั้งหมด:\n${priceAll} บาท"
+                        } else {
+                            Toast.makeText(context, "cant find order id", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<OrderDetail>>, t: Throwable) {
+                        println(t.message)
+                        Toast.makeText(context, "error on failed" + t.message, Toast.LENGTH_LONG).show()
+                    }
+                })
+                val intent = Intent(context, OrderHistoryDetail::class.java)
+                intent.putExtra("orderId", item.id)
                 view.context.startActivity(intent)
             }
-//            binding.btnSelectAddress.setOnClickListener {
-//                val item = addresslist[adapterPosition]
-//                var addressId = item.id.toString().toInt()
-//
-//
-//                println("____________________")
-//                println("order:"+orderId+" address:"+addressId)
-//                orderApi.updateOrderAddress(orderId, addressId).enqueue(object : Callback<Order> {
-//                    override fun onResponse(call: Call<Order>, response: Response<Order>) {
-//                        if (response.isSuccessful) {
-//                            Toast.makeText(itemView.context, "Add address success", Toast.LENGTH_SHORT).show()
-//                            (itemView.context as Activity).finish()
-//                        } else {
-//                            Toast.makeText(context, "cant find address id", Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<Order>, t: Throwable) {
-//                        println(t.message)
-//                        Toast.makeText(context, "error on failed" + t.message, Toast.LENGTH_LONG).show()
-//                    }
-//                })
-//            }
-//
+
         }
     }
 
@@ -73,8 +68,6 @@ class SelectOrderHistoryAdapter(val orderHistoryList: ArrayList<Order>, val cont
                         priceAll+= it.price_all
                     }
                     binding.priceTxt.text = "รวมทั้งหมด:\n${priceAll} บาท"
-                    intent.putExtra("orderId", item.id)
-                    intent.putExtra("priceAll", priceAll)
                 } else {
                     Toast.makeText(context, "cant find order id", Toast.LENGTH_SHORT).show()
                 }

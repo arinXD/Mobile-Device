@@ -16,13 +16,13 @@ class AdminShowEditDelete : AppCompatActivity() {
     private lateinit var bindingShow : ActivityAdminShowEditDeleteBinding
     var productList = arrayListOf<AdminProduct>()
     val createClient = AdminProductAPI.create()
+    var mId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingShow = ActivityAdminShowEditDeleteBinding.inflate(layoutInflater)
         setContentView(bindingShow.root)
-
-        val mId = intent.getIntExtra("id",0)
+        mId = intent.getIntExtra("id",0)
         val mName = intent.getStringExtra("product_name")
         val mPrice = intent.getIntExtra("price",0)
 
@@ -31,7 +31,7 @@ class AdminShowEditDelete : AppCompatActivity() {
         val mAmount = intent.getIntExtra("amount",0)
         val mSubtype_id = intent.getIntExtra("product_type",0)
 
-        bindingShow.txtid.setText(mId.toString())
+//        bindingShow.txtid.setText(mId.toString())
         bindingShow.txttitle.setText(mName.toString())
         bindingShow.txtprice.setText("฿" + mPrice.toString())
 //        bindingShow.txtamout.setText("Amount: " + mAmount.toString())
@@ -41,7 +41,9 @@ class AdminShowEditDelete : AppCompatActivity() {
 
         bindingShow.btnEdit.setOnClickListener {
             val intent = Intent(applicationContext, AdminEditProduct::class.java)
-            intent.putExtra("id",mId)
+            println("___________\nfrom put intent")
+            println(mId.toString())
+            intent.putExtra("id",mId.toString())
             intent.putExtra("product_name",mName)
             intent.putExtra("price",mPrice)
             intent.putExtra("detail",mDetail)
@@ -96,7 +98,7 @@ class AdminShowEditDelete : AppCompatActivity() {
             setTitle("DELETE")
             setMessage("Do you want to delete the Product?")
             setNegativeButton("Yes") { dialog, which ->
-                createClient.daleteProduct(bindingShow.txtid.text.toString().toInt())
+                createClient.daleteProduct(mId)
                     .enqueue(object : Callback<AdminProduct> {
                         override fun onResponse(call: Call<AdminProduct>, response: Response<AdminProduct>) {
                             if (response.isSuccessful) {

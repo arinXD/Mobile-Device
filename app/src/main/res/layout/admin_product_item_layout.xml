@@ -11,9 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="220dp"
         android:layout_gravity="center_horizontal"
-        app:cardElevation="3dp"
-
-        >
+        app:cardElevation="3dp">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -21,7 +19,8 @@
                 android:id="@+id/imageProduct"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/title"

@@ -15,41 +15,57 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class AdminInsertProduct : AppCompatActivity() {
     private lateinit var bindingInsertProduct : ActivityAdminInsertProductBinding
-    var one : Int = 0
+    private val api = AdminProductAPI.create()
+    var productTypeListObj = ArrayList<String>()
+    var type_id: Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         bindingInsertProduct = ActivityAdminInsertProductBinding.inflate(layoutInflater)
         setContentView(bindingInsertProduct.root)
-        showDropdownone ()
-
-        bindingInsertProduct.btnAddProduct.setOnClickListener {
-            addProduct()
-        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, productTypeListObj)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        bindingInsertProduct.dropdownInsert.setAdapter(arrayAdapter)
+
+        bindingInsertProduct.dropdownInsert.setOnItemClickListener{ parent, _, position, _->
+            type_id = position+1
+        }
+
+        bindingInsertProduct.btnAddProduct.setOnClickListener {
+            println("______\ntype id")
+            println(type_id)
+            addProduct(type_id)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getAllType()
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId== android.R.id.home)
         { finish() }
         return super.onOptionsItemSelected(item)
     }
-    private fun addProduct() {
-        val api = AdminProductAPI.create()
+
+    private fun addProduct(typeId: Int) {
         api.insertProduct(
             bindingInsertProduct.edtNameProduct.text.toString(),
             bindingInsertProduct.edtPriceProduct.text.toString().toInt(),
             bindingInsertProduct.edtDetailProduct.text.toString(),
             bindingInsertProduct.edtImage.text.toString(),
             bindingInsertProduct.edtSizeS.text.toString().toInt(),
-            one+1
+            typeId
         ).enqueue(object: Callback<AdminProduct> {
             override fun onResponse(
                 call: Call<AdminProduct>,
                 response: Response<AdminProduct>
             ) {
                 if (response.isSuccessful) {
-                    Toast.makeText(applicationContext,"Succesfully Inserted",
+                    Toast.makeText(applicationContext,"Successfully Inserted",
                         Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
@@ -63,12 +79,25 @@ class AdminInsertProduct : AppCompatActivity() {
             }
         })
     }
+    fun getAllType(){
+        api.getAllType().enqueue(object : Callback<List<ProductType>> {
+            override fun onResponse(call: Call<List<ProductType>>, response:
+
+            Response<List<ProductType>>) {
+
+                response.body()?.forEach {
+                    var type = ProductType(it.id, it.type_name)
+                    productTypeListObj.add(type.type_name)
+
+                }
+//                binding.rcv.adapter = ProductsAdapter(productsList, applicationContext)
+            }
+            override fun onFailure(call: Call<List<ProductType>>, t: Throwable) {
+                Toast.makeText(applicationContext,"Error onFailure " + t.message, Toast.LENGTH_LONG).show()
+            }
+        })
+    }
     fun callprotype(onSuccess: (List<producttypeClass>) -> Unit, onFailure: (Throwable) -> Unit) {
-        val api:AdminProductAPI= Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:3000/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(AdminProductAPI::class.java)
         api.retrieveProductType().enqueue(object : Callback<List<producttypeClass>> {
             override fun onResponse(call: Call<List<producttypeClass>>, response: Response<List<producttypeClass>>) {
                 if (response.isSuccessful) {
@@ -86,21 +115,5 @@ class AdminInsertProduct : AppCompatActivity() {
             }
         })
 
-    }
-    private fun showDropdownone () {
-        callprotype(
-            onSuccess = { station ->
-                val stationNames = station.map { it.type_name }.toTypedArray()
-                val adapter = ArrayAdapter(this, R.layout.dropdown_item, stationNames)
-                bindingInsertProduct.dropdowninsert.setText("สั่งซื้อสินค้า")
-                bindingInsertProduct.dropdowninsert.setAdapter(adapter)
-                bindingInsertProduct.dropdowninsert.setOnItemClickListener { parent, _, position, _ ->
-                    one = parent.getItemIdAtPosition(position).toInt()
-                }
-            },
-            onFailure = { error ->
-                Log.e("AddTimeStationActivity", "Failed to fetch Station", error)
-            }
-        )
     }
 }
