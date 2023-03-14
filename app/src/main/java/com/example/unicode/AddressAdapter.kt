@@ -13,7 +13,7 @@ import com.example.unicode.databinding.AddressItemBinding
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AddressAdapter(val addresslist : ArrayList<address>, val context: Context) :
+class AddressAdapter(val addresslist : ArrayList<Address>, val context: Context) :
     RecyclerView.Adapter<AddressAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View, val binding: AddressItemBinding) :
@@ -33,10 +33,10 @@ class AddressAdapter(val addresslist : ArrayList<address>, val context: Context)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
                         .create(AddressAPI::class.java)
-                    serv.deleteAddress(addressId).enqueue(object : retrofit2.Callback<address> {
+                    serv.deleteAddress(addressId).enqueue(object : retrofit2.Callback<Address> {
                         override fun onResponse(
-                            call: retrofit2.Call<address>,
-                            response: retrofit2.Response<address>
+                            call: retrofit2.Call<Address>,
+                            response: retrofit2.Response<Address>
                         ) {
                             if (response.isSuccessful) {
                                 Toast.makeText(
@@ -48,7 +48,7 @@ class AddressAdapter(val addresslist : ArrayList<address>, val context: Context)
                             }
                         }
 
-                        override fun onFailure(call: retrofit2.Call<address>, t: Throwable) {
+                        override fun onFailure(call: retrofit2.Call<Address>, t: Throwable) {
                             Toast.makeText(
                                 context, "Update Failure",
                                 Toast.LENGTH_LONG

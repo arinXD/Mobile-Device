@@ -48,8 +48,8 @@ class AddressEdit : AppCompatActivity() {
             bindingEdit.editzipCode.text.toString(),
             bindingEdit.editphone.text.toString().toInt(),
             1
-        ).enqueue(object : Callback<address> {
-            override fun onResponse(call: Call<address>, response: Response<address>) {
+        ).enqueue(object : Callback<Address> {
+            override fun onResponse(call: Call<Address>, response: Response<Address>) {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         applicationContext, "Seccessfully Updated",
@@ -64,7 +64,7 @@ class AddressEdit : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<address>, t: Throwable) {
+            override fun onFailure(call: Call<Address>, t: Throwable) {
                 Toast.makeText(
                     applicationContext, "Update Failure",
                     Toast.LENGTH_LONG

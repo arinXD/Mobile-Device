@@ -45,7 +45,7 @@ class AllProducts : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
 
             when (it.itemId){
-                R.id.category -> Toast.makeText(applicationContext, "Category", Toast.LENGTH_LONG).show()
+//                R.id.category -> Toast.makeText(applicationContext, "Category", Toast.LENGTH_LONG).show()
                 R.id.home ->{
                     ""
                 }
@@ -95,7 +95,8 @@ class AllProducts : AppCompatActivity() {
 
                     response.body()?.forEach {
                         productsList.add(ProductClass(
-                            it.id, it.product_name,it.price,it.detail,it.photo,it.amount,it.subtype_id)) }
+                            it.id, it.product_name,it.price,it.detail,it.photo,it.amount,it.subtype_id))
+                    }
                     binding.rcv.adapter = ProductsAdapter(productsList, applicationContext)
                 }
                 override fun onFailure(call: Call<List<ProductClass>>, t: Throwable) {

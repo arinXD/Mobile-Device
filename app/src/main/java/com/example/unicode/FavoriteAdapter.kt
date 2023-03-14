@@ -57,10 +57,10 @@ class FavoriteAdapter (val items : ArrayList<FavProduct>, val context: Context) 
         favClient.deleteFav(pv_id).enqueue(object : Callback<FavProduct> {
             override fun onResponse(call: Call<FavProduct>, response: Response<FavProduct>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        context, "Seccessfully Delete",
-                        Toast.LENGTH_LONG
-                    ).show()
+//                    Toast.makeText(
+//                        context, "Seccessfully Delete",
+//                        Toast.LENGTH_LONG
+//                    ).show()
                 }
             }
             override fun onFailure(call: Call<FavProduct>, t: Throwable) {

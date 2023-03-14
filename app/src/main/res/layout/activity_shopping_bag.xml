@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="50dp"/>
+        android:layout_marginBottom="100dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:id="@+id/totalTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rcvPrice"
+            android:layout_below="@id/orderTxt"
             android:text="ยอดรวม"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -50,18 +50,18 @@
             android:id="@+id/priceAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 บาท"
+            android:text=""
             android:textColor="@color/black"
-            android:layout_below="@id/rcvPrice"
-            android:layout_alignParentRight="true"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvPrice"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_below="@id/orderTxt"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_alignParentRight="true"/>
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rcvPrice"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/orderTxt"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginBottom="10dp"/>-->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnBuy"
             android:layout_below="@id/totalTxt"

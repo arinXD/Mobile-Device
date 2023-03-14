@@ -1,7 +1,6 @@
 package com.example.unicode
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,12 +14,10 @@ import com.example.unicode.databinding.ActivitySelectAddressBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class SelectAddress : AppCompatActivity() {
     private lateinit var binding: ActivitySelectAddressBinding
-    var addresslist = arrayListOf<address>()
+    var addresslist = arrayListOf<Address>()
     lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,16 +53,16 @@ class SelectAddress : AppCompatActivity() {
         val serv = AddressAPI.create()
         val id: String? = session.pref.getString(SessionManager.KEY_ID, null)
         serv.retrieveAddress(id.toString().toInt())
-            .enqueue(object : Callback<List<address>> {
-                override fun onResponse(call: Call<List<address>>, response: Response<List<address>>) {
+            .enqueue(object : Callback<List<Address>> {
+                override fun onResponse(call: Call<List<Address>>, response: Response<List<Address>>) {
                     response.body()?.forEach{
-                        addresslist.add(address(it.id,it.address,it.province,it.district,it.zip_code,it.phone))
+                        addresslist.add(Address(it.id,it.address,it.province,it.district,it.zip_code,it.phone))
                     }
                     binding.rcv.adapter = SelectAddressAdapter(addresslist,applicationContext)
 
                 }
 
-                override fun onFailure(call: Call<List<address>>, t: Throwable) {
+                override fun onFailure(call: Call<List<Address>>, t: Throwable) {
                     Toast.makeText(applicationContext,"Error onFailue " + t.message,
                         Toast.LENGTH_LONG).show()
                 }
@@ -95,10 +92,10 @@ class SelectAddress : AppCompatActivity() {
             val id: String? = session.pref.getString(SessionManager.KEY_ID, null)
 
             api.insertAddr(address, province, district, zipCode, phone,id.toString().toInt())
-                .enqueue(object : Callback<address> {
+                .enqueue(object : Callback<Address> {
                     override fun onResponse(
-                        call: Call<address>,
-                        response: Response<address>
+                        call: Call<Address>,
+                        response: Response<Address>
                     ) {
                         if (response.isSuccessful()) {
                             Toast.makeText(
@@ -117,7 +114,7 @@ class SelectAddress : AppCompatActivity() {
                         }
                     }
 
-                    override fun onFailure(call: Call<address>, t: Throwable) {
+                    override fun onFailure(call: Call<Address>, t: Throwable) {
                         Toast.makeText(
                             applicationContext,
                             "Error onFailuse " + t.message,

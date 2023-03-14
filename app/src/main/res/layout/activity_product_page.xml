@@ -17,10 +17,9 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/productImg"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp" />
+                android:layout_height="350dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="centerCrop" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.example.unicode
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.RadioButton
 import android.widget.Toast
@@ -151,7 +152,7 @@ class ProductPage : AppCompatActivity() {
                 .enqueue(object : Callback<OrderDetail> {
                     override fun onResponse(call: Call<OrderDetail>, response: Response<OrderDetail>) {
                         if (response.isSuccessful) {
-                            Toast.makeText(applicationContext,"Add to shop bag", Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(applicationContext,"Add to shop bag", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(applicationContext, ShoppingBag::class.java))
                             finish()
                         }else{
@@ -189,6 +190,7 @@ class ProductPage : AppCompatActivity() {
                     override fun onResponse(call: Call<FavProduct>, response: Response<FavProduct>) {
                         if (response.isSuccessful) {
                             Toast.makeText(applicationContext,"Add to favorite product", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(applicationContext, FavoritePage::class.java))
                         }else{
                             Toast.makeText(applicationContext,"Add failed", Toast.LENGTH_SHORT).show()
                         }
@@ -210,10 +212,24 @@ class ProductPage : AppCompatActivity() {
         pId = intent.getStringExtra("product_id").toString()
         callSize(pId.toInt())
     }
-
+    //    create menu
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.my_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
+        }
+        when (item.itemId) {
+            R.id.fav -> {
+                var intent = Intent(applicationContext, FavoritePage::class.java)
+                startActivity(intent)
+            }
+            R.id.basket -> {
+                var intent = Intent(applicationContext, ShoppingBag::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

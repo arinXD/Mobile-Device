@@ -34,9 +34,9 @@ class ShoppingBag : AppCompatActivity() {
         val itemDecor = DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL)
         binding.rcvProduct.addItemDecoration(itemDecor)
 
-        binding.rcvPrice.adapter = OrderDetailShoppingBagAdapter(priceList,applicationContext)
-        binding.rcvPrice.layoutManager = LinearLayoutManager(applicationContext)
-        binding.rcvPrice.addItemDecoration(itemDecor)
+//        binding.rcvPrice.adapter = OrderDetailShoppingBagAdapter(priceList,applicationContext)
+//        binding.rcvPrice.layoutManager = LinearLayoutManager(applicationContext)
+//        binding.rcvPrice.addItemDecoration(itemDecor)
 
         binding.btnBuy.setOnClickListener {
             var intent = Intent(applicationContext, CompleteProductPage::class.java)
@@ -100,7 +100,7 @@ class ShoppingBag : AppCompatActivity() {
 
                     }
                     binding.rcvProduct.adapter = ShoppingBagAdapter(productsList, applicationContext)
-                    binding.rcvPrice.adapter = OrderDetailShoppingBagAdapter(priceList, applicationContext)
+//                    binding.rcvPrice.adapter = OrderDetailShoppingBagAdapter(priceList, applicationContext)
                     binding.priceAll.text = priceAll.toString() +" บาท"
                 }
 

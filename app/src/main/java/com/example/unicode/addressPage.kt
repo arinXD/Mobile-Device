@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class addressPage : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddressPageBinding
-    var addresslist = arrayListOf<address>()
+    var addresslist = arrayListOf<Address>()
     lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,16 +63,16 @@ class addressPage : AppCompatActivity() {
             .create(AddressAPI ::class.java)
         val id: String? = session.pref.getString(SessionManager.KEY_ID, null)
         serv.retrieveAddress(id.toString().toInt())
-            .enqueue(object : Callback<List<address>> {
-                override fun onResponse(call: Call<List<address>>, response: Response<List<address>>) {
+            .enqueue(object : Callback<List<Address>> {
+                override fun onResponse(call: Call<List<Address>>, response: Response<List<Address>>) {
                     response.body()?.forEach{
-                        addresslist.add(address(it.id,it.address,it.province,it.district,it.zip_code,it.phone))
+                        addresslist.add(Address(it.id,it.address,it.province,it.district,it.zip_code,it.phone))
                     }
                     binding.recyclerView.adapter = AddressAdapter(addresslist,applicationContext)
 
                 }
 
-                override fun onFailure(call: Call<List<address>>, t: Throwable) {
+                override fun onFailure(call: Call<List<Address>>, t: Throwable) {
                     Toast.makeText(applicationContext,"Error onFailue " + t.message,
                         Toast.LENGTH_LONG).show()
                 }
@@ -102,10 +102,10 @@ class addressPage : AppCompatActivity() {
             val id: String? = session.pref.getString(SessionManager.KEY_ID, null)
 
             api.insertAddr(address, province, district, zipCode, phone,id.toString().toInt())
-                .enqueue(object : Callback<address> {
+                .enqueue(object : Callback<Address> {
                     override fun onResponse(
-                        call: Call<address>,
-                        response: Response<address>
+                        call: Call<Address>,
+                        response: Response<Address>
                     ) {
                         if (response.isSuccessful()) {
                             Toast.makeText(
@@ -124,7 +124,7 @@ class addressPage : AppCompatActivity() {
                         }
                     }
 
-                    override fun onFailure(call: Call<address>, t: Throwable) {
+                    override fun onFailure(call: Call<Address>, t: Throwable) {
                         Toast.makeText(
                             applicationContext,
                             "Error onFailuse " + t.message,

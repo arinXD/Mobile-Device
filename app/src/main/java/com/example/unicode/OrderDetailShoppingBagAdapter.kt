@@ -18,7 +18,6 @@ class OrderDetailShoppingBagAdapter (val items : ArrayList<OrderDetailShopBagPro
     inner class ViewHolder(view: View, val binding: ShoppingDetailItemBinding):
         RecyclerView.ViewHolder(view){
         init{
-
         }
     }
 

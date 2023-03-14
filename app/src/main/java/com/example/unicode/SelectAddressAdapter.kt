@@ -2,22 +2,17 @@ package com.example.unicode
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unicode.databinding.SelectAddressItemBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Path
 
-class SelectAddressAdapter(val addresslist: ArrayList<address>, val context: Context) :
+class SelectAddressAdapter(val addresslist: ArrayList<Address>, val context: Context) :
     RecyclerView.Adapter<SelectAddressAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View, val binding: SelectAddressItemBinding) :
@@ -53,7 +48,7 @@ class SelectAddressAdapter(val addresslist: ArrayList<address>, val context: Con
                 orderApi.updateOrderAddress(orderId, addressId).enqueue(object : Callback<Order> {
                     override fun onResponse(call: Call<Order>, response: Response<Order>) {
                         if (response.isSuccessful) {
-                            Toast.makeText(itemView.context, "Add address success", Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(itemView.context, "Add address success", Toast.LENGTH_SHORT).show()
                             (itemView.context as Activity).finish()
                         } else {
                             Toast.makeText(context, "cant find address id", Toast.LENGTH_SHORT).show()

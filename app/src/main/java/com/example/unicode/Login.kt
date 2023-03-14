@@ -91,11 +91,11 @@ class Login : AppCompatActivity() {
                         )
                         var i: Intent
                         if(type=="user"){
-                            Toast.makeText(applicationContext, type, Toast.LENGTH_LONG).show()
+//                            Toast.makeText(applicationContext, type, Toast.LENGTH_LONG).show()
                             i = Intent(applicationContext, AllProducts::class.java)
                             startActivity(i)
                         }else{
-                            Toast.makeText(applicationContext, type, Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext, "Hi $type", Toast.LENGTH_LONG).show()
                             i = Intent(applicationContext, AdminPage::class.java)
                             startActivity(i)
                         }

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-data class address(
+data class Address(
     @Expose
     @SerializedName("id") val id: Int,
     @Expose

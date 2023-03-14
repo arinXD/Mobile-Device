@@ -50,7 +50,7 @@ class SelectCreditAdapter (val creditList : ArrayList<Credit>, val context: Cont
                 orderApi.updateOrderCredit(orderId, creditId).enqueue(object : Callback<Order> {
                     override fun onResponse(call: Call<Order>, response: Response<Order>) {
                         if (response.isSuccessful) {
-                            Toast.makeText(itemView.context, "Add credit success", Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(itemView.context, "Add credit success", Toast.LENGTH_SHORT).show()
                             (itemView.context as Activity).finish()
                         } else {
                             Toast.makeText(context, "cant find address id", Toast.LENGTH_SHORT).show()

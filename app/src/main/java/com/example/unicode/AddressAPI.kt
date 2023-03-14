@@ -1,7 +1,5 @@
 package com.example.unicode
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,7 +9,7 @@ interface AddressAPI {
     @GET("allAddress/{id}")
     fun retrieveAddress(
         @Path("id") id: Int
-    ): Call<List<address>>
+    ): Call<List<Address>>
 
     @FormUrlEncoded
     @POST("address")
@@ -22,7 +20,7 @@ interface AddressAPI {
         @Field("district") district: String,
         @Field("zip_code") zip_code: String,
         @Field("phone") phone: Int,
-        @Field("user_id") user_id: Int): Call<address>
+        @Field("user_id") user_id: Int): Call<Address>
 
     @FormUrlEncoded
     @PUT("address/{id}")
@@ -33,11 +31,11 @@ interface AddressAPI {
         @Field("district") district: String,
         @Field("zip_code") zip_code: String,
         @Field("phone") phone: Int,
-        @Field("user_id") user_id: Int): Call<address>
+        @Field("user_id") user_id: Int): Call<Address>
 
     @DELETE("/address/{id}") /// Delete
     fun deleteAddress(
-        @Path("id") id: Int): Call<address>
+        @Path("id") id: Int): Call<Address>
 
     companion object {
         fun create(): AddressAPI {

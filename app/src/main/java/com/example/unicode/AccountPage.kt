@@ -25,8 +25,8 @@ class AccountPage : AppCompatActivity() {
         binding.email.text = email
 
         binding.myOrder.setOnClickListener {
-//            var intent = Intent(applicationContext, ::class.java)
-//            startActivity(intent)
+            var intent = Intent(applicationContext, OrderHistory::class.java)
+            startActivity(intent)
         }
         binding.myCredit.setOnClickListener {
             var intent = Intent(applicationContext, craditcardPage::class.java)
@@ -60,7 +60,7 @@ class AccountPage : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
 
             when (it.itemId){
-                R.id.category -> Toast.makeText(applicationContext, "Category", Toast.LENGTH_LONG).show()
+//                R.id.category -> Toast.makeText(applicationContext, "Category", Toast.LENGTH_LONG).show()
                 R.id.home ->{
                     intent = Intent(applicationContext,AllProducts::class.java)
                     startActivity(intent)

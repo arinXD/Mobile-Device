@@ -49,10 +49,7 @@ class ShoppingBagAdapter (val items : ArrayList<OrderProductClass>, val context:
         client.deleteOrderDetail(id).enqueue(object : Callback<OrderProductClass> {
             override fun onResponse(call: Call<OrderProductClass>, response: Response<OrderProductClass>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        context, "Successfully Delete",
-                        Toast.LENGTH_LONG
-                    ).show()
+//                    Toast.makeText(context, "Successfully Delete",Toast.LENGTH_LONG).show()
                 }
             }
             override fun onFailure(call: Call<OrderProductClass>, t: Throwable) {

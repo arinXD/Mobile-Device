@@ -8,16 +8,34 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface OrderAPI {
+    //    /order/:order_id
+    @GET("/order/{order_id}")
+    fun findOrder(
+        @Path("order_id") order_id: Int
+    ): Call<Order>
+
     //    /order/product/:user_id
     @GET("order/product/{user_id}")
     fun callProduct(
         @Path("user_id") user_id: Int
     ): Call<List<OrderProductClass>>
-//    /order/:address_id
-    @GET("order/{address_id}")
+
+    @GET("order/history/{user_id}")
+    fun orderHistory(
+        @Path("user_id") user_id: Int
+    ): Call<List<Order>>
+
+    //    /order/:address_id
+    @GET("order/address/{address_id}")
     fun orderAddress(
         @Path("address_id") id: Int
     ): Call<AddressClass>
+
+    //  /order/detail/:order_id
+    @GET("order/detail/{order_id}")
+    fun findOrderDetail(
+        @Path("order_id") order_id: Int
+    ): Call<List<OrderDetail>>
 
     @GET("order/credit/{credit_card_id}")
     fun orderCredit(
@@ -56,6 +74,11 @@ interface OrderAPI {
     fun updateOrderCredit(
         @Path("order_id") order_id: Int,
         @Path("credit_card_id") credit_card_id: Int,
+    ): Call<Order>
+
+    @PUT("order/complete/{order_id}")
+    fun orderComplete(
+        @Path("order_id") order_id: Int
     ): Call<Order>
 
     companion object {

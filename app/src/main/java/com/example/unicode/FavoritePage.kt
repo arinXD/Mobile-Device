@@ -37,8 +37,8 @@ class FavoritePage : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
 
             when (it.itemId) {
-                R.id.category -> Toast.makeText(applicationContext, "Category", Toast.LENGTH_LONG)
-                    .show()
+//                R.id.category -> Toast.makeText(applicationContext, "Category", Toast.LENGTH_LONG)
+//                    .show()
                 R.id.home -> {
                     intent = Intent(applicationContext, AllProducts::class.java)
                     startActivity(intent)

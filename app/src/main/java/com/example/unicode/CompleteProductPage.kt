@@ -34,11 +34,11 @@ class CompleteProductPage : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.recyclerViewProductPrice.adapter =
-            OrderDetailShoppingBagAdapter(priceList, applicationContext)
+        binding.recyclerViewProductPrice.adapter = OrderDetailShoppingBagAdapter(priceList, applicationContext)
         binding.recyclerViewProductPrice.layoutManager = LinearLayoutManager(applicationContext)
         val itemDecor = DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL)
         binding.recyclerViewProductPrice.addItemDecoration(itemDecor)
+
 
         println("orderId -1: $orderId")
         println("address ID: $addressID")
@@ -50,6 +50,29 @@ class CompleteProductPage : AppCompatActivity() {
         }
         binding.editCreditProductComplete.setOnClickListener {
             startActivity(Intent(applicationContext, SelectCreditCard::class.java))
+        }
+        binding.btnAddComplete.setOnClickListener {
+            if(binding.editAddressProductComplete.text == "กรุณาเลือกที่อยู่"){
+                Toast.makeText(applicationContext, "กรุณาเลือกที่อยู่", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (binding.editCreditProductComplete.text == "กรุณาเลือกบัตรเครดิต"){
+                Toast.makeText(applicationContext, "กรุณาเลือกบัตรเครดิต", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            orderApi.orderComplete(orderId).enqueue(object : Callback<Order> {
+                override fun onResponse(call: Call<Order>, response: Response<Order>) {
+                    if (response.isSuccessful) {
+                        startActivity(Intent(applicationContext, CompleteStatusPage::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(applicationContext,"error in orderComplete", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onFailure(call: Call<Order>, t: Throwable) {
+                    Toast.makeText(applicationContext,"error on orderCredit" + t.message,Toast.LENGTH_LONG).show()
+                }
+            })
         }
     }
 
@@ -121,7 +144,7 @@ class CompleteProductPage : AppCompatActivity() {
                         orderApi.orderAddress(addressID).enqueue(object : Callback<AddressClass> {
                             override fun onResponse(call: Call<AddressClass>, response: Response<AddressClass>) {
                                 if (response.isSuccessful) {
-                                    binding.editAddressProductComplete.text = "ที่อยู่ ${response.body()?.address} " +
+                                    binding.editAddressProductComplete.text = "ที่อยู่ในการจัดส่ง:\n${response.body()?.address} " +
                                             "${response.body()?.province} ${response.body()?.district} "+
                                             "\n${response.body()?.zip_code} ${response.body()?.phone}"
 
@@ -130,7 +153,8 @@ class CompleteProductPage : AppCompatActivity() {
                                 }
                             }
                             override fun onFailure(call: Call<AddressClass>, t: Throwable) {
-                                Toast.makeText(applicationContext,"error on orderAddress" + t.message,Toast.LENGTH_LONG).show()
+                                println(t.message)
+                                Toast.makeText(applicationContext,"error on orderAddress",Toast.LENGTH_LONG).show()
                             }
                         })
                     }
@@ -144,8 +168,9 @@ class CompleteProductPage : AppCompatActivity() {
                             override fun onResponse(call: Call<Credit>, response: Response<Credit>) {
                                 if (response.isSuccessful) {
                                     println(response.body())
-                                    binding.editCreditProductComplete.text = "${response.body()?.firstname}\n"+
-                                            "${response.body()?.card_no.toString()}\n${response.body()?.expire_date.toString()}"
+                                    binding.editCreditProductComplete.text = "รายละเอียดบัตรเครดิต:\nชื่อ: ${response.body()?.firstname}\n"+
+                                            "รหัสบัตร: ${response.body()?.card_no.toString()}"
+//                                            "\n${response.body()?.expire_date.toString()}"
                                 } else {
                                     Toast.makeText(applicationContext,"cant find address id", Toast.LENGTH_SHORT).show()
                                 }
