@@ -10,11 +10,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
+            android:padding="17dp"
             android:layout_height="match_parent">
 
             <TextView
@@ -43,8 +45,6 @@
                 android:id="@+id/edtNameProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="17sp"
-                android:layout_marginEnd="17dp"
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@android:color/black"
                 android:hint="ชื่อสินค้า:"
@@ -56,8 +56,6 @@
                 android:id="@+id/edtPriceProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="17sp"
-                android:layout_marginEnd="17dp"
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@android:color/black"
                 android:hint="ราคา:"
@@ -67,10 +65,9 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="334dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="19dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20dp"
                 android:hint="ประเภทสินค้า">
 
                 <AutoCompleteTextView
@@ -86,7 +83,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
 
@@ -135,8 +131,7 @@
                 android:id="@+id/edtSize_S"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="17sp"
-                android:layout_marginEnd="17dp"
+
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@android:color/black"
                 android:hint="จำนวนสินค้า:"
@@ -149,8 +144,6 @@
                 android:id="@+id/edtDetailProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="17sp"
-                android:layout_marginEnd="17dp"
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@android:color/black"
                 android:hint="รายละเอียด:"
@@ -162,8 +155,6 @@
                 android:id="@+id/edtImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="17sp"
-                android:layout_marginEnd="17dp"
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@android:color/black"
                 android:hint="รูปสินค้า:"
@@ -176,9 +167,8 @@
                 android:id="@+id/btnAddProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="22sp"
+
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="22dp"
                 android:background="@drawable/edittext_black"
                 android:fontFamily="@font/kanitlight"
                 android:text="ยืนยัน"
