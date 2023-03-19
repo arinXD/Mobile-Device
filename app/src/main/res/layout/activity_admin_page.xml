@@ -20,19 +20,6 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/btnAddProduct"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/baseline_add_circle_24"/>
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/btnAddProductType"
-            android:layout_toLeftOf="@id/btnAddProduct"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/baseline_add_circle_24"/>
 
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView

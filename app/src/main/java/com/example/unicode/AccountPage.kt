@@ -40,10 +40,6 @@ class AccountPage : AppCompatActivity() {
             var intent = Intent(applicationContext, addressPage::class.java)
             startActivity(intent)
         }
-        binding.myTransport.setOnClickListener {
-//            var intent = Intent(applicationContext, ::class.java)
-//            startActivity(intent)
-        }
 
         binding.logout.setOnClickListener {
             val edit = session.edior

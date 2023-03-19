@@ -22,6 +22,7 @@ class AllProducts : AppCompatActivity() {
     private lateinit var binding: ActivityAllProductsBinding
     var productsList = arrayListOf<ProductClass>()
     lateinit var session: SessionManager
+    var typeId: Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAllProductsBinding.inflate(layoutInflater)
@@ -45,7 +46,7 @@ class AllProducts : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
 
             when (it.itemId){
-//                R.id.category -> Toast.makeText(applicationContext, "Category", Toast.LENGTH_LONG).show()
+                R.id.category -> startActivity(Intent(applicationContext, CategoryPage::class.java))
                 R.id.home ->{
                     ""
                 }
@@ -61,6 +62,8 @@ class AllProducts : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        typeId = intent.getIntExtra("typeId",0)
+        println(typeId)
         productLast()
         callProductsData()
     }
@@ -88,7 +91,7 @@ class AllProducts : AppCompatActivity() {
     fun callProductsData(){
         productsList.clear()
         val productClient = ProductAPI.create()
-        productClient.productAll().enqueue(object : Callback<List<ProductClass>> {
+        productClient.productTypeAll(typeId).enqueue(object : Callback<List<ProductClass>> {
                 override fun onResponse(call: Call<List<ProductClass>>, response:
 
                 Response<List<ProductClass>>) {

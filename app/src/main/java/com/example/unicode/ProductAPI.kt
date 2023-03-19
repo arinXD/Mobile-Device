@@ -7,6 +7,12 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ProductAPI {
+
+    @GET("type/product/{type_id}")
+    fun productTypeAll(
+        @Path("type_id") type_id: Int
+    ): Call<List<ProductClass>>
+
     @GET("products/all")
     fun productAll(): Call<List<ProductClass>>
 
@@ -17,6 +23,9 @@ interface ProductAPI {
     fun findProductSize(
         @Path("id") id: Int
     ): Call<List<SizeClass>>
+
+    @GET("product/type")
+    fun getAllProductType(): Call<List<CategoryClass>>
 
     companion object {
         fun create(): ProductAPI {

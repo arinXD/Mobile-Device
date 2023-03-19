@@ -15,7 +15,7 @@ interface AdminProductAPI {
     @FormUrlEncoded
     @POST("add/type")
     fun addType(
-        @Field("type_name") type_name:String
+        @Field(" ") type_name:String
     ): Call<ProductType>
 
 

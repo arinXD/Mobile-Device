@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unicode.databinding.ActivityOrderHistoryDetailBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,6 +18,8 @@ import java.util.*
 class OrderHistoryDetail : AppCompatActivity() {
     private lateinit var binding: ActivityOrderHistoryDetailBinding
     lateinit var session: SessionManager
+    var priceList = arrayListOf<OrderDetailShopBagProduct>()
+    var transportList = arrayListOf<TransportDetailClass>()
     var orderId = 0
     var orderAPI = OrderAPI.create()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,40 +34,129 @@ class OrderHistoryDetail : AppCompatActivity() {
         orderId = intent.getIntExtra("orderId", 0)
 
         binding.userName.text = userName
+
+        binding.rcvHistoryProduct.adapter =
+            OrderDetailShoppingBagAdapter(priceList, applicationContext)
+        binding.rcvHistoryProduct.layoutManager = LinearLayoutManager(applicationContext)
+        val itemDecor = DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL)
+        binding.rcvHistoryProduct.addItemDecoration(itemDecor)
+
+        binding.transportDetail.adapter = TransportDetailAdapter(transportList, applicationContext)
+        binding.transportDetail.layoutManager = LinearLayoutManager(applicationContext)
+        binding.transportDetail.addItemDecoration(itemDecor)
     }
 
     override fun onResume() {
         super.onResume()
         findOrder(orderId)
+        callProduct(orderId)
+        getTransportDetail(orderId)
         var priceAll = 0
         orderAPI.findOrderDetail(orderId).enqueue(object : Callback<List<OrderDetail>> {
-            override fun onResponse(call: Call<List<OrderDetail>>, response: Response<List<OrderDetail>>) {
+            override fun onResponse(
+                call: Call<List<OrderDetail>>,
+                response: Response<List<OrderDetail>>
+            ) {
                 if (response.isSuccessful) {
                     response.body()?.forEach {
-                        priceAll+= it.price_all
+                        priceAll += it.price_all
                     }
                     binding.priceTxt.text = "รวมทั้งหมด: ${priceAll}"
                 } else {
-                    Toast.makeText(applicationContext, "cant find order id", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "cant find order id", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
             override fun onFailure(call: Call<List<OrderDetail>>, t: Throwable) {
                 println(t.message)
-                Toast.makeText(applicationContext, "error on failed" + t.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "error on failed" + t.message, Toast.LENGTH_LONG)
+                    .show()
             }
         })
     }
+
     //    create menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.my_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun getTransportDetail(orderId: Int) {
+        transportList.clear()
+        orderAPI.getTransportDetail(orderId)
+            .enqueue(object : Callback<List<TransportDetailClass>> {
+                override fun onResponse(
+                    call: Call<List<TransportDetailClass>>, response:
+                    Response<List<TransportDetailClass>>
+                ) {
+                    println(response.body())
+                    response.body()?.forEach {
+                        transportList.add(
+                            TransportDetailClass(
+                                it.title,
+                                it.detail,
+                                it.created_at,
+                                it.photo
+                            )
+                        )
+
+                    }
+                    binding.transportDetail.adapter =
+                        TransportDetailAdapter(transportList, applicationContext)
+                }
+
+                override fun onFailure(call: Call<List<TransportDetailClass>>, t: Throwable) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Error on callProduct" + t.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            })
+    }
+
+    private fun callProduct(id: Int) {
+        priceList.clear()
+        println(id)
+        val orderApi = OrderAPI.create()
+        orderApi.orderHistoryProduct(id)
+            .enqueue(object : Callback<List<OrderDetailShopBagProduct>> {
+                override fun onResponse(
+                    call: Call<List<OrderDetailShopBagProduct>>, response:
+                    Response<List<OrderDetailShopBagProduct>>
+                ) {
+                    println(response.body())
+                    response.body()?.forEach {
+                        priceList.add(
+                            OrderDetailShopBagProduct(
+                                it.product_name,
+                                it.amount,
+                                it.price,
+                                it.amount * it.price
+                            )
+                        )
+
+                    }
+                    binding.rcvHistoryProduct.adapter =
+                        OrderDetailShoppingBagAdapter(priceList, applicationContext)
+                }
+
+                override fun onFailure(call: Call<List<OrderDetailShopBagProduct>>, t: Throwable) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Error on callProduct" + t.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            })
     }
 
     fun findOrder(orderId: Int) {
@@ -115,9 +208,13 @@ class OrderHistoryDetail : AppCompatActivity() {
                                     var creditData = response.body()
                                     binding.cardDetail.text =
                                         "Name: ${creditData?.firstname}" +
-                                        "\nCard no: ${getMaskedCardNumber(creditData?.card_no.toString())}" +
-                                        "\nExpire date: ${formatDate(creditData?.expire_date.toString())}" +
-                                        "\nCVV: ${getMaskedCVV(creditData?.cvv.toString().toInt())}"
+                                                "\nCard no: ${getMaskedCardNumber(creditData?.card_no.toString())}" +
+                                                "\nExpire date: ${formatDate(creditData?.expire_date.toString())}" +
+                                                "\nCVV: ${
+                                                    getMaskedCVV(
+                                                        creditData?.cvv.toString().toInt()
+                                                    )
+                                                }"
                                 } else {
                                     Toast.makeText(
                                         applicationContext,

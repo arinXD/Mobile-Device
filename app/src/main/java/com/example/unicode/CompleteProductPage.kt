@@ -43,7 +43,6 @@ class CompleteProductPage : AppCompatActivity() {
         println("orderId -1: $orderId")
         println("address ID: $addressID")
 
-//        binding.editAddressProductComplete.text = "ที่อยู่ $addressID"
 
         binding.editAddressProductComplete.setOnClickListener {
             startActivity(Intent(applicationContext, SelectAddress::class.java))
@@ -111,8 +110,7 @@ class CompleteProductPage : AppCompatActivity() {
                         )
 
                     }
-                    binding.recyclerViewProductPrice.adapter =
-                        OrderDetailShoppingBagAdapter(priceList, applicationContext)
+                    binding.recyclerViewProductPrice.adapter = OrderDetailShoppingBagAdapter(priceList, applicationContext)
 //                    binding.priceAll.text = priceAll.toString() +" บาท"
                 }
 

@@ -8,14 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.unicode.databinding.AdminProductItemLayoutBinding
 
-class AdminProductsAdapter (
-    val productList:ArrayList<AdminProduct>?,
+class AdminProductsAdapter(
+    val productList: ArrayList<AdminProduct>?,
 //    val items:List<Product>,
-    val context: Context,val listener:MyClickListener):
-    RecyclerView.Adapter<AdminProductsAdapter.ViewHolder>(){
+    val context: Context, val listener: MyClickListener
+) :
+    RecyclerView.Adapter<AdminProductsAdapter.ViewHolder>() {
 
-    inner class ViewHolder(view: View, val  binding: AdminProductItemLayoutBinding) :
-        RecyclerView.ViewHolder(view){
+    inner class ViewHolder(view: View, val binding: AdminProductItemLayoutBinding) :
+        RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
                 val position = adapterPosition
@@ -35,21 +36,25 @@ class AdminProductsAdapter (
         }
     }
 
-    interface  MyClickListener{
+    interface MyClickListener {
         fun onClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = AdminProductItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return ViewHolder(binding.root,binding)
+        val binding = AdminProductItemLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ViewHolder(binding.root, binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val binding = holder.binding
 
         Glide.with(context).load(productList!![position].photo).into(binding.imageProduct)
-        binding.title.text = ""+ productList!![position].product_name
-        binding.price.text = "฿"+ productList!![position].price.toString()
+        binding.title.text = "" + productList!![position].product_name
+        binding.price.text = "฿" + productList!![position].price.toString()
 
     }
 

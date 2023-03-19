@@ -199,7 +199,7 @@ class ProductPage : AppCompatActivity() {
                         println(t.message)
                         Toast.makeText(
                             applicationContext,
-                            "Error onFailure" + t.message,
+                            "Error onFailure",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -212,24 +212,9 @@ class ProductPage : AppCompatActivity() {
         pId = intent.getStringExtra("product_id").toString()
         callSize(pId.toInt())
     }
-    //    create menu
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.my_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
-        }
-        when (item.itemId) {
-            R.id.fav -> {
-                var intent = Intent(applicationContext, FavoritePage::class.java)
-                startActivity(intent)
-            }
-            R.id.basket -> {
-                var intent = Intent(applicationContext, ShoppingBag::class.java)
-                startActivity(intent)
-            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -8,7 +8,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface OrderAPI {
-    //    /order/:order_id
+    @GET("transport/detail/{order_id}")
+    fun getTransportDetail(
+        @Path("order_id") order_id:Int
+    ):Call <List<TransportDetailClass>>
+
+    @GET("order/history/product/{order_id}")
+    fun orderHistoryProduct(
+        @Path("order_id") order_id: Int
+    ): Call<List<OrderDetailShopBagProduct>>
+
     @GET("/order/{order_id}")
     fun findOrder(
         @Path("order_id") order_id: Int
