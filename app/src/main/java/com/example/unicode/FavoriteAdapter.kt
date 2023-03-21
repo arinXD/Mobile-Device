@@ -40,15 +40,41 @@ class FavoriteAdapter (val items : ArrayList<FavProduct>, val context: Context) 
 
             }
             binding.btnAddtoCart.setOnClickListener {
-//                val item = items[adapterPosition]
-//                val contextView : Context = view.context
-//                val intent = Intent(context, ProductPage::class.java)
-//                intent.putExtra("product_id",item.id.toString())
-////                intent.putExtra("product_detail",item.detail)
-//                intent.putExtra("product_name",item.product_name)
-//                intent.putExtra("product_price",item.price.toString())
-//                intent.putExtra("product_photo",item.photo)
-//                contextView.startActivity(intent)
+                println("Dwadawdaw")
+                val item = items[adapterPosition]
+                val contextView : Context = view.context
+                val intent = Intent(context, ProductPage::class.java)
+                var detail = ""
+                var amount = ""
+                var api = ProductAPI.create()
+                api.findProductDetail(item.id).enqueue(object : Callback<ProductClass> {
+                    override fun onResponse(call: Call<ProductClass>, response: Response<ProductClass>) {
+                        if (response.isSuccessful) {
+                            detail = response.body()?.detail.toString()
+                        }
+                    }
+                    override fun onFailure(call: Call<ProductClass>, t: Throwable) {
+                        println(t.message)
+                    }
+                })
+                api.findProductAmount(item.id).enqueue(object : Callback<ProductClass> {
+                    override fun onResponse(call: Call<ProductClass>, response: Response<ProductClass>) {
+                        if (response.isSuccessful) {
+                            amount = response.body()?.amount.toString()
+                        }
+                    }
+                    override fun onFailure(call: Call<ProductClass>, t: Throwable) {
+                        println(t.message)
+                    }
+                })
+                println("------"+detail+"-------------"+amount)
+                intent.putExtra("product_id",item.id.toString())
+                intent.putExtra("product_detail",detail)
+                intent.putExtra("product_name",item.product_name)
+                intent.putExtra("product_price",item.price.toString())
+                intent.putExtra("product_photo",item.photo)
+                intent.putExtra("product_amount",amount)
+                contextView.startActivity(intent)
             }
         }
     }
@@ -57,10 +83,6 @@ class FavoriteAdapter (val items : ArrayList<FavProduct>, val context: Context) 
         favClient.deleteFav(pv_id).enqueue(object : Callback<FavProduct> {
             override fun onResponse(call: Call<FavProduct>, response: Response<FavProduct>) {
                 if (response.isSuccessful) {
-//                    Toast.makeText(
-//                        context, "Seccessfully Delete",
-//                        Toast.LENGTH_LONG
-//                    ).show()
                 }
             }
             override fun onFailure(call: Call<FavProduct>, t: Throwable) {

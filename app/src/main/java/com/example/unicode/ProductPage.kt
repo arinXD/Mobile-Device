@@ -171,19 +171,6 @@ class ProductPage : AppCompatActivity() {
 
         }
 
-//        binding.productNav.setOnItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.fav -> {
-//                    var intent = Intent(applicationContext, FavoritePage::class.java)
-//                    startActivity(intent)
-//                }
-//                R.id.basket -> {
-//                    Toast.makeText(applicationContext, "Basket", Toast.LENGTH_LONG).show()
-//                }
-//            }
-//            true
-//        }
-
         binding.btnFav.setOnClickListener {
             favClient.addFav(uId.toString().toInt(),pId.toInt())
                 .enqueue(object : Callback<FavProduct> {
@@ -197,11 +184,11 @@ class ProductPage : AppCompatActivity() {
                     }
                     override fun onFailure(call: Call<FavProduct>, t: Throwable) {
                         println(t.message)
-                        Toast.makeText(
-                            applicationContext,
-                            "Error onFailure",
-                            Toast.LENGTH_LONG
-                        ).show()
+//                        Toast.makeText(
+//                            applicationContext,
+//                            "Error onFailure",
+//                            Toast.LENGTH_LONG
+//                        ).show()
                     }
                 })
         }

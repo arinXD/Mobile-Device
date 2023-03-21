@@ -8,6 +8,16 @@ import retrofit2.http.Path
 
 interface ProductAPI {
 
+    @GET("/find/detail/{product_id}")
+    fun findProductDetail(
+        @Path("product_id") type_id: Int
+    ): Call<ProductClass>
+
+    @GET("/find/amount/{product_id}")
+    fun findProductAmount(
+        @Path("product_id") type_id: Int
+    ): Call<ProductClass>
+
     @GET("type/product/{type_id}")
     fun productTypeAll(
         @Path("type_id") type_id: Int
