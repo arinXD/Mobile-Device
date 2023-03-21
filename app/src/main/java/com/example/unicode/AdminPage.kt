@@ -115,6 +115,10 @@ class AdminPage : AppCompatActivity(), AdminProductsAdapter.MyClickListener{
                 val intent = Intent(applicationContext, AdminInsertProduct::class.java)
                 startActivity(intent)
             }
+            R.id.transportManage ->{
+                val intent = Intent(applicationContext, AdminSelectTransportMange::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

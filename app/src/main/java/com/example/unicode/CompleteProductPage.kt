@@ -179,7 +179,7 @@ class CompleteProductPage : AppCompatActivity() {
                         })
                     }
 
-                    binding.createdAt.text = response.body()?.created_at.toString()
+                    binding.createdAt.text = DateFormatUnicode.formatDate(response.body()?.created_at.toString())
                 } else {
                     Toast.makeText(applicationContext, "cant find order id", Toast.LENGTH_SHORT).show()
                 }

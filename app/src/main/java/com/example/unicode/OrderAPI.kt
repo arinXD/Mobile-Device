@@ -89,6 +89,11 @@ interface OrderAPI {
     fun orderComplete(
         @Path("order_id") order_id: Int
     ): Call<Order>
+    
+    @GET("find/price/all/{order_id}")
+    fun findPriceAll(
+        @Path("order_id") order_id:Int
+    ): Call<OrderPriceAll>
 
     companion object {
         fun create(): OrderAPI {

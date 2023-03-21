@@ -49,7 +49,7 @@ class OrderHistory : AppCompatActivity() {
         orderAPI.orderHistory(uId).enqueue(object : Callback<List<Order>> {
             override fun onResponse(call: Call<List<Order>>, response:Response<List<Order>>) {
 //                println(response.body())
-                response.body()?.forEach {
+                response.body()?.reversed()?.forEach {
                     orderList.add(
                          Order(
                              it.id,

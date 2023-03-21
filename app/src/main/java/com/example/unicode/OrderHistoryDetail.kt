@@ -14,6 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class OrderHistoryDetail : AppCompatActivity() {
     private lateinit var binding: ActivityOrderHistoryDetailBinding
@@ -98,7 +99,7 @@ class OrderHistoryDetail : AppCompatActivity() {
                     Response<List<TransportDetailClass>>
                 ) {
                     println(response.body())
-                    response.body()?.forEach {
+                    response.body()?.reversed()?.forEach {
                         transportList.add(
                             TransportDetailClass(
                                 it.title,

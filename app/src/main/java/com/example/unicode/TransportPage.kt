@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class TransportPage : AppCompatActivity() {
     private lateinit var binding: ActivityTransportPageBinding
-    var transportlist = arrayListOf<Order>()
+    var orderList = arrayListOf<OrderForTransport>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityTransportPageBinding.inflate(layoutInflater)
@@ -24,7 +24,7 @@ class TransportPage : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.recyclerViewTransport.adapter = TransportAdapter(this.transportlist, applicationContext)
+        binding.recyclerViewTransport.adapter = OrderForTransportAdapter(orderList, applicationContext)
         binding.recyclerViewTransport.layoutManager = LinearLayoutManager(applicationContext)
         binding.recyclerViewTransport.addItemDecoration(
             DividerItemDecoration(
@@ -33,10 +33,13 @@ class TransportPage : AppCompatActivity() {
             )
         )
 
+
+
     }
     override fun onResume() {
         super.onResume()
-        callTransportData()
+        var receiveStatus = intent.getStringExtra("receiveStatus").toString()
+        orderForTransport(receiveStatus)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -46,23 +49,23 @@ class TransportPage : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun callTransportData(){
-        transportlist.clear()
-        val serv : OrderAPI = OrderAPI.create()
-//        serv.retrieveOrder(2)
-//            .enqueue(object : Callback<List<Order>> {
-//                override fun onResponse(call: Call<List<Order>>, response: Response<List<Order>>) {
-//                    response.body()?.forEach{
-//                        transportlist.add(Order(it.id,it.pay_status,it.transport_fee,it.user_address_id,it.user_id,it.created_at,it.updated_at))
-//                    }
-//                    binding.recyclerViewTransport.adapter = TransportAdapter(transportlist,applicationContext)
-//                }
-//
-//                override fun onFailure(call: Call<List<Order>>, t: Throwable) {
-//                    Toast.makeText(applicationContext,"Error onFailue " + t.message,
-//                        Toast.LENGTH_LONG).show()
-//                }
-//            })
+    private fun orderForTransport(status: String){
+        orderList.clear()
+        val api = TransportAPI.create()
+        api.orderForTransport(status)
+            .enqueue(object : Callback<List<OrderForTransport>> {
+                override fun onResponse(call: Call<List<OrderForTransport>>, response: Response<List<OrderForTransport>>) {
+                    response.body()?.forEach{
+                        orderList.add(OrderForTransport(it.id,it.pay_status, it.receive_status, it.transport_fee, it.user_address_id, it.credit_card_id, it.user_id, it.created_at, it.updated_at))
+                    }
+                    binding.recyclerViewTransport.adapter = OrderForTransportAdapter(orderList,applicationContext)
+                }
+
+                override fun onFailure(call: Call<List<OrderForTransport>>, t: Throwable) {
+                    Toast.makeText(applicationContext,"Error on orderForTransport" + t.message,
+                        Toast.LENGTH_LONG).show()
+                }
+            })
     }
 
 }
