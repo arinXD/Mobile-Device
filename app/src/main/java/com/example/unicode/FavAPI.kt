@@ -13,7 +13,7 @@ interface FavAPI {
     fun addFav(
         @Path("user_id") user_id: Int,
         @Path("product_id") product_id: Int,
-    ): Call<FavProduct>
+    ): Call<FavProductAddClass>
 
     @GET("fav/product/{user_id}")
     fun favProduct(

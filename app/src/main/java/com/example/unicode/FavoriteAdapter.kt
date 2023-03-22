@@ -40,40 +40,16 @@ class FavoriteAdapter (val items : ArrayList<FavProduct>, val context: Context) 
 
             }
             binding.btnAddtoCart.setOnClickListener {
-                println("Dwadawdaw")
+                println(":DDDDDDD")
                 val item = items[adapterPosition]
                 val contextView : Context = view.context
                 val intent = Intent(context, ProductPage::class.java)
-                var detail = ""
-                var amount = ""
-                var api = ProductAPI.create()
-                api.findProductDetail(item.id).enqueue(object : Callback<ProductClass> {
-                    override fun onResponse(call: Call<ProductClass>, response: Response<ProductClass>) {
-                        if (response.isSuccessful) {
-                            detail = response.body()?.detail.toString()
-                        }
-                    }
-                    override fun onFailure(call: Call<ProductClass>, t: Throwable) {
-                        println(t.message)
-                    }
-                })
-                api.findProductAmount(item.id).enqueue(object : Callback<ProductClass> {
-                    override fun onResponse(call: Call<ProductClass>, response: Response<ProductClass>) {
-                        if (response.isSuccessful) {
-                            amount = response.body()?.amount.toString()
-                        }
-                    }
-                    override fun onFailure(call: Call<ProductClass>, t: Throwable) {
-                        println(t.message)
-                    }
-                })
-                println("------"+detail+"-------------"+amount)
                 intent.putExtra("product_id",item.id.toString())
-                intent.putExtra("product_detail",detail)
+                intent.putExtra("product_detail",item.detail)
                 intent.putExtra("product_name",item.product_name)
                 intent.putExtra("product_price",item.price.toString())
                 intent.putExtra("product_photo",item.photo)
-                intent.putExtra("product_amount",amount)
+                intent.putExtra("product_amount",item.amount.toString())
                 contextView.startActivity(intent)
             }
         }

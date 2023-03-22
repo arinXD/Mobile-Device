@@ -76,7 +76,7 @@ class FavoritePage : AppCompatActivity() {
                 ) {
                     println(response.body())
                     response.body()?.forEach {
-                        productsList.add(FavProduct(it.pv_id,it.id,it.product_name,it.price,it.photo))
+                        productsList.add(FavProduct(it.pv_id,it.id,it.product_name, it.detail,it.price,it.photo ,it.amount))
                     }
                     binding.rcv.adapter = FavoriteAdapter(productsList, applicationContext)
                 }

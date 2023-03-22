@@ -14,8 +14,14 @@ data class FavProduct(
     @SerializedName("product_name") val product_name: String,
 
     @Expose
+    @SerializedName("detail") val detail: String,
+
+    @Expose
     @SerializedName("price") val price: Int,
 
     @Expose
     @SerializedName("photo") val photo: String,
+
+    @Expose
+    @SerializedName("amount") val amount: Int
 )

@@ -173,8 +173,8 @@ class ProductPage : AppCompatActivity() {
 
         binding.btnFav.setOnClickListener {
             favClient.addFav(uId.toString().toInt(),pId.toInt())
-                .enqueue(object : Callback<FavProduct> {
-                    override fun onResponse(call: Call<FavProduct>, response: Response<FavProduct>) {
+                .enqueue(object : Callback<FavProductAddClass> {
+                    override fun onResponse(call: Call<FavProductAddClass>, response: Response<FavProductAddClass>) {
                         if (response.isSuccessful) {
                             Toast.makeText(applicationContext,"Add to favorite product", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(applicationContext, FavoritePage::class.java))
@@ -182,13 +182,8 @@ class ProductPage : AppCompatActivity() {
                             Toast.makeText(applicationContext,"Add failed", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    override fun onFailure(call: Call<FavProduct>, t: Throwable) {
+                    override fun onFailure(call: Call<FavProductAddClass>, t: Throwable) {
                         println(t.message)
-//                        Toast.makeText(
-//                            applicationContext,
-//                            "Error onFailure",
-//                            Toast.LENGTH_LONG
-//                        ).show()
                     }
                 })
         }
