@@ -67,7 +67,7 @@
             android:layout_below="@id/totalTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
+            android:background="@drawable/edittext_black"
             android:text="ดำเนินการสั่งซื้อสินค้า"
             android:layout_marginTop="15dp"
             android:textColor="@color/white"/>

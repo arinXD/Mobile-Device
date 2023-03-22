@@ -7,6 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.unicode.databinding.ActivityAccountPageBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AccountPage : AppCompatActivity() {
     private lateinit var binding : ActivityAccountPageBinding
@@ -20,9 +23,6 @@ class AccountPage : AppCompatActivity() {
 
         val email: String? = session.pref.getString(SessionManager.KEY_EMAIL, null)
         val userName: String? = session.pref.getString(SessionManager.KEY_NAME, null)
-
-        binding.userName.text = userName
-        binding.email.text = email
 
         binding.myOrder.setOnClickListener {
             var intent = Intent(applicationContext, OrderHistory::class.java)
@@ -38,6 +38,10 @@ class AccountPage : AppCompatActivity() {
         }
         binding.myAddress.setOnClickListener {
             var intent = Intent(applicationContext, addressPage::class.java)
+            startActivity(intent)
+        }
+        binding.btnEditUserProfile.setOnClickListener {
+            var intent = Intent(applicationContext, UserEditProfile::class.java)
             startActivity(intent)
         }
 
@@ -68,6 +72,26 @@ class AccountPage : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
+        var api = UserAPI.create()
+        val uId = session.pref.getString(SessionManager.KEY_ID, null).toString().toInt()
+        api.findUser(uId)
+            .enqueue(object : Callback<FindUserClass> {
+                override fun onResponse(call: Call<FindUserClass>, response: Response<FindUserClass>) {
+                    if (response.isSuccessful) {
+                        var email = response.body()?.email.toString()
+                        var username = response.body()?.user_name.toString()
+                        binding.userName.text = username
+                        binding.email.text = email
+                    } else {
+                        println("cant find")
+                    }
+                }
+
+                override fun onFailure(call: Call<FindUserClass>, t: Throwable) {
+                    Toast.makeText(applicationContext,"Duplicate email", Toast.LENGTH_LONG).show()
+                }
+
+            })
     }
 
     //    create menu

@@ -72,7 +72,10 @@ class AdminPage : AppCompatActivity(), AdminProductsAdapter.MyClickListener{
                 ///save Button
                 myBuilder.setNegativeButton("Save"){dialog, _ ->
                     val typeName = mDialogView.findViewById(R.id.edtAddProductType) as EditText
-
+                    if(typeName.text.isEmpty()){
+                        Toast.makeText(applicationContext, "กรอกประเภทสินค้า", Toast.LENGTH_SHORT).show()
+                        return@setNegativeButton
+                    }
                     api.addType(typeName.text.toString())
                         .enqueue(object : Callback<ProductType> {
                             override fun onResponse(
